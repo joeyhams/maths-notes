@@ -1,0 +1,94 @@
+\documentclass{article} 
+
+\usepackage[a4paper,margin=2cm,left=2cm,right=2cm]{geometry} 
+\usepackage[UKenglish]{babel}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{proposition}{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+
+% Example
+% \DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\GL}{GL}
+
+\usepackage{graphicx}
+\graphicspath{{./images/}}
+
+% UNCOMMENT IF USING REFERENCES
+% \usepackage[notes, backend=biber]{biblatex-chicago}
+% \addbibresource{refs.bib} 
+
+\title{Algebra}
+\author{joel}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Common groups and other useful facts} 
+
+\begin{itemize}
+
+    \item $S_n$ is the symmetric group, ways of ordering $n$ elements. $|S_n| =n!$
+
+    \item $D_n$ is the dihedral group, giving the symmetries of an $n$-gon. 
+        $|D_n| = 2n$ (identity, n-1 rotations and n reflections)
+
+    \item $\GL(n, \R)$ is the set of invertible $n \times n$ matrices. $\GL(n,
+        \Z_p)$ is the set of invertible $n \times n$ matrices with entries in
+        $\Z_p$ if $p$ is prime. These sets are groups under matrix
+        multiplication. 
+
+    \item It is useful to think of injection as "not losing information" and
+        surjection as "hits everything". 
+
+    \item A valid binary operation is one for which you have $a, b \in S$ and 
+        $a * b \in S$, or that you can see it as a mapping of $S \times S \to S$.
+
+
+\end{itemize}
+
+If $S$  and $T$  are finite sets then how many maps are there $S \to T$?
+$|S||T|$
+
+\begin{proof} 
+    If we consider the mapping $f: S \to T$ then all the possible mapping of a
+    given $S$ to some $T$ as $S \times T$. The element $S$ can be mapped to any
+    $T$, and so for one $S$ there is $T$ options, with $S$ necessary inputs. As
+    such, there is (from Corollary 0.2.2) $|S||T|$ mappings. 
+\end{proof} 
+
+Here's all 24 permutations of $S_4$ in cycle notation. The key thing to
+remember is that not all of the combinations are made up of one cycle, there
+are also the compositions of two cycles (and for $S_n$ when $n>4$ combinations
+of 2 and 3, etc.)
+
+\begin{gather*}
+    \text{Identity}, \\
+    (1 2), (1 3), (1 4), (2 3), (2 4), (3 4), \\
+    (1 2 3), (1 2 4), (1 3 4), (2 3 4), \\
+    (1 3 2), (1 4 2), (1 4 3), (2 4 3), \\
+    (1 2 3 4), (1 2 4 3), (1 3 2 4), (1 3 4 2), (1 4 3 2), (1 4 2 3) \\
+    (1 2)(3 4), (1 3)(2 4), (1 4)(2 3)
+\end{gather*}
+
+$ \text{some text here} $
+
+
+\end{document}
