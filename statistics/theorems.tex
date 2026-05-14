@@ -1,0 +1,417 @@
+\documentclass{minimal}
+
+\begin{document}
+% Probability Axioms
+\begin{enumerate}
+    \item $P(E) \geq 0$ for all event sets $E \subseteq \Omega$
+    \item $P(\Omega) = 1$
+    \item $P(E_1 \cup E_2) = P(E_1) + P(E_2)$ for any $E_1, E_2 \subseteq \Omega$ if $E_1 \cap E_2 = \emptyset$
+\end{enumerate}
+
+% PMF validity conditions
+f_X(x) = \begin{cases} P(X = x), & x \in \Omega \\ 0, & \text{Otherwise} \end{cases}
+
+0 \leq f_X(x) \leq 1, \; \forall x \in \mathbb{R}; \quad \sum_{x \in \Omega} f_X(x) = 1
+
+% PDF validity
+P(a \leq Y \leq b) = \int_a^b f_Y(y) \, dy
+
+P(Y = y) = \lim_{b \to y} \int_y^b f_Y(u) \, du = 0
+
+f_Y(y) \geq 0, \; \forall y \in \mathbb{R}; \quad \int_{-\infty}^{\infty} f_Y(y) \, dy = 1
+
+% CDF
+F_X(x) = P(X \leq x) = \sum_{u \leq x} f_X(u), \quad F_Y(y) = P(Y \leq y) = \int_{-\infty}^y f_Y(u) \, du
+
+\lim_{u \to -\infty} F(u) = 0; \quad \lim_{u \to \infty} F(u) = 1; \quad F(u) - F(v) \geq 0 \text{ for } u, v \in \mathbb{R} \text{ where } u > v
+
+f_Y(y) = \frac{d}{dy} F_Y(y)
+
+q_p = F_Y^{-1}(p) \text{ such that } P(Y \leq q_p) = F_Y(q_p) = p
+
+% Joint PMF/PDF
+f_{X,Y}(x,y) = P(X = x \cap Y = y)
+
+P((X,Y) \in T) = \iint_{(x,y) \in T} f_{XY}(x,y) \, dx \, dy
+
+% Marginal
+f_X(x) = \begin{cases} \sum_y f_{XY}(x,y), & \text{for discrete } Y \\ \int_{-\infty}^{\infty} f_{XY}(x,y) \, dy, & \text{for continuous } Y \end{cases}
+
+% Conditional
+f_{X|Y}(x|y) = \frac{f_{XY}(x,y)}{f_Y(y)}, \quad \text{where } f_Y(y) > 0
+
+% Independence
+f_{XY}(x,y) = f_X(x) f_Y(y), \quad \forall x, y \in \mathbb{R}
+
+f_{\mathbf{X}}(\mathbf{x}) = f_{X_1}(x_1) \cdots f_{X_n}(x_n) = \prod_{i=1}^n f_{X_i}(x_i), \quad \forall \mathbf{x} \in \mathbb{R}^n
+
+% Identically distributed
+f_X(t) = f_Y(t) \text{ for all } t \in \mathbb{R}
+
+% IID joint
+f_{\mathbf{X}}(\mathbf{x}) = f(x_1) \cdots f(x_n) = \prod_{i=1}^n f(x_i), \quad \mathbf{x} \in \mathbb{R}^n
+
+% Expectation
+\mathbb{E}[X] = \begin{cases} \sum_x x f_X(x), & \text{discrete} \\ \int_{-\infty}^{\infty} x f_X(x) \, dx, & \text{continuous} \end{cases}
+
+\mathbb{E}[Z] = \mathbb{E}[g(X)] = \begin{cases} \sum_x g(x) f_X(x), & \text{discrete} \\ \int_{-\infty}^{\infty} g(x) f_X(x) \, dx, & \text{continuous} \end{cases}
+
+% Expectation properties
+\mathbb{E}[aX + b] = a\mathbb{E}[X] + b
+
+\mathbb{E}[X + Y] = \mathbb{E}[X] + \mathbb{E}[Y], \quad \mathbb{E}\left[\sum_{i=1}^n X_i\right] = \sum_{i=1}^n \mathbb{E}[X_i]
+
+\mathbb{E}[XY] = \mathbb{E}[X]\mathbb{E}[Y] \quad \text{(if } X, Y \text{ independent)}
+
+% Variance
+\text{Var}(X) = \mathbb{E}\left[(X - \mathbb{E}[X])^2\right]
+
+\text{Var}(X) = \mathbb{E}\left[(X - \mathbb{E}[X])^2\right] = \mathbb{E}[X^2] - \mathbb{E}[X]^2 = \mathbb{E}[X(X - \mathbb{E}[X])]
+
+% Variance properties
+\text{Var}(aX + b) = a^2 \text{Var}(X)
+
+\text{Var}\left(\sum_{i=1}^n X_i\right) = \sum_{i=1}^n \text{Var}(X_i) \quad \text{(if } X_1, \ldots, X_n \text{ independent)}
+
+% Covariance and correlation
+\text{Cov}(X,Y) = \mathbb{E}[(X - \mathbb{E}[X])(Y - \mathbb{E}[Y])] = \mathbb{E}[XY] - \mathbb{E}[X]\mathbb{E}[Y]
+
+\text{Cor}(X,Y) = \frac{\text{Cov}(X,Y)}{\sqrt{\text{Var}(X)\text{Var}(Y)}}
+
+% Covariance properties
+\text{Cov}(X,X) = \text{Var}(X)
+
+\text{Cov}(aX + b, cY + d) = ac\,\text{Cov}(X,Y)
+
+\text{Var}(aX + bY + c) = a^2\text{Var}(X) + b^2\text{Var}(Y) + 2ab\,\text{Cov}(X,Y)
+
+% CLT
+P(X_1 + \cdots + X_n \leq x) \to \Phi\!\left(\frac{x - n\mu}{\sqrt{n}\,\sigma}\right) \quad \text{as } n \to \infty
+
+\sum_{i=1}^n X_i \overset{\text{approx.}}{\sim} N(n\mu, n\sigma^2), \qquad
+\bar{X} = \frac{1}{n}\sum_{i=1}^n X_i \overset{\text{approx.}}{\sim} N\!\left(\mu, \frac{\sigma^2}{n}\right)
+
+% Population/Sample/Census (no maths)
+
+% Estimator and estimate (no maths beyond notation)
+
+% Unbiased estimator
+\mathbb{E}[T_n] = \theta
+
+\lim_{n \to \infty} \mathbb{E}[T_n] = \theta
+
+% Consistency
+\mathbb{E}[T_n] \to \theta \text{ as } n \to \infty
+
+\text{Var}(T_n) \to 0 \text{ as } n \to \infty
+
+% Sample mean and variance
+\bar{X} = \frac{1}{n} \sum_{i=1}^n X_i
+
+S^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X})^2
+
+% Properties of X-bar and S^2
+\mathbb{E}[\bar{X}] = \mu
+
+\text{Var}(\bar{X}) = \frac{\sigma^2}{n}
+
+\mathbb{E}[S^2] = \sigma^2
+
+\text{S.E.}(\bar{X}) = \sqrt{\text{Var}(\bar{X})} = \frac{\sigma}{\sqrt{n}}
+
+% Population and sample moments
+\mu_k := \mathbb{E}[X^k] = \begin{cases} \sum_x x^k f_X(x|\theta), & \text{discrete} \\ \int_{-\infty}^{\infty} x^k f_X(x|\theta) \, dx, & \text{continuous} \end{cases}
+
+\overline{X^k} = \frac{1}{n} \sum_{i=1}^n X_i^k
+
+% Method of moments estimator
+(\theta_1, \ldots, \theta_m) = h(\mu_1, \ldots, \mu_m)
+
+(T_1, \ldots, T_m) = h\!\left(\bar{X}, \ldots, \overline{X^m}\right)
+
+% Likelihood function
+L(\theta | \mathbf{x}) = \prod_{i=1}^n f(x_i; \theta)
+
+\ell(\theta | \mathbf{x}) = \log L(\theta | \mathbf{x}) = \log\prod_{i=1}^n f_X(x_i|\theta) = \sum_{i=1}^n \log f_X(x_i|\theta)
+
+% MLE
+\hat{\theta} = \arg\max_\theta\, L(\theta | \mathbf{x})
+
+% Confidence interval
+P(l(\mathbf{X}) < \theta < u(\mathbf{X})) = 1 - \alpha
+
+P(l(\mathbf{X}) > \theta) = P(u(\mathbf{X}) < \theta) = \frac{\alpha}{2}
+
+% CI for normal known variance
+\bar{X} \sim N\!\left(\mu, \frac{\sigma^2}{n}\right)
+
+Z = \frac{\bar{X} - \mu}{\sqrt{\sigma^2/n}} \sim N(0,1)
+
+P\!\left(-z_{\alpha/2} < Z < z_{\alpha/2}\right) = 1 - \alpha
+
+P\!\left(\bar{X} - z_{\alpha/2}\frac{\sigma}{\sqrt{n}} < \mu < \bar{X} + z_{\alpha/2}\frac{\sigma}{\sqrt{n}}\right) = 1 - \alpha
+
+\left(\bar{x} - z_{\alpha/2}\frac{\sigma}{\sqrt{n}},\; \bar{x} + z_{\alpha/2}\frac{\sigma}{\sqrt{n}}\right)
+
+% CLT-based CI
+\frac{\bar{X} - \mu}{\sqrt{\text{Var}(\bar{X})}} \sim N(0,1) \text{ as } n \to \infty
+
+\left(\bar{X} - z_{\alpha/2}\,\widehat{\text{S.E.}}(\bar{X}),\; \bar{X} + z_{\alpha/2}\,\widehat{\text{S.E.}}(\bar{X})\right)
+= \left(\bar{x} - z_{\alpha/2}\sqrt{\frac{s^2}{n}},\; \bar{x} + z_{\alpha/2}\sqrt{\frac{s^2}{n}}\right)
+
+% Chi-squared distribution
+X = \sum_{i=1}^n Z_i^2 \sim \chi^2_n
+
+% Student's t-distribution
+\frac{Z}{\sqrt{Y/m}} \sim t_m
+
+% Distribution of X-bar for small samples
+\bar{X} \text{ and } S^2 \text{ are independent}
+
+\frac{\bar{X} - \mu}{\sqrt{\sigma^2/n}} \sim N(0,1)
+
+\frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{n-1}
+
+T = \frac{\bar{X} - \mu}{\sqrt{S^2/n}} \sim t_{n-1}
+
+% t CI for mu
+P\!\left(-t_{n-1;\,\alpha/2} \leq \frac{\bar{X}-\mu}{\sqrt{S^2/n}} \leq t_{n-1;\,\alpha/2}\right) = 1-\alpha
+
+\left(\bar{x} - t_{n-1;\,\alpha/2}\sqrt{\frac{s^2}{n}},\; \bar{x} + t_{n-1;\,\alpha/2}\sqrt{\frac{s^2}{n}}\right)
+
+% CI for variance
+Y = \frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{n-1}
+
+P\!\left(\chi^2_{n-1;\,1-\alpha/2} \leq \frac{(n-1)S^2}{\sigma^2} \leq \chi^2_{n-1;\,\alpha/2}\right) = 1-\alpha
+
+\left(\frac{(n-1)s^2}{\chi^2_{n-1;\,\alpha/2}},\; \frac{(n-1)s^2}{\chi^2_{n-1;\,1-\alpha/2}}\right)
+
+% Hypothesis testing definitions
+
+% Type I/II error, significance, power
+P(\text{Reject } H_0 \mid H_0 \text{ true}) = \alpha
+
+P(\text{Fail to reject } H_0 \mid H_0 \text{ false}) = \beta
+
+P(\text{Reject } H_0 \mid H_0 \text{ false}) = 1 - \beta
+
+% p-value
+p = P(T \geq t \mid T \sim H_0) \quad \text{(one-sided, positive direction)}
+
+p = P(T \leq t \mid T \sim H_0) \quad \text{(one-sided, negative direction)}
+
+p = 2\min\{P(T \leq t \mid T \sim H_0),\, P(T \geq t \mid T \sim H_0)\} \quad \text{(two-sided)}
+
+p = P(|T| \geq |t| \mid T \sim H_0) = 2P(T \geq |t| \mid T \sim H_0) \quad \text{(two-sided, symmetric)}
+
+% Z-test
+Z = \frac{\bar{X} - \mu_0}{\sqrt{\sigma^2/n}} \sim N(0,1)
+
+z = \frac{\bar{x} - \mu_0}{\sqrt{\sigma^2/n}}
+
+% Power function for Z-test
+P(Z \in C \mid \mu = \mu^*) = \Phi\!\left(-z_{\alpha/2} - \frac{\mu^* - \mu_0}{\sqrt{\sigma^2/n}}\right)
++ 1 - \Phi\!\left(z_{\alpha/2} - \frac{\mu^* - \mu_0}{\sqrt{\sigma^2/n}}\right)
+
+% One-sample t-test
+T = \frac{\bar{X} - \mu_0}{\sqrt{S^2/n}} \sim t_{n-1}
+
+P(\text{Reject } H_0 \mid H_0 \text{ true}) = P(|T| \geq t_0 \mid T \sim t_{n-1}) = \alpha
+\implies P(T \geq t_0 \mid T \sim t_{n-1}) = \frac{\alpha}{2}
+
+% Paired t-test
+D_i = X_i - Y_i, \quad D_i \sim N(\mu_D, \sigma^2_D), \quad \mu_D = \mu_X - \mu_Y
+
+T = \frac{\bar{D} - 0}{\sqrt{S^2/n}} \sim t_{n-1}
+
+% Two-sample t-test
+\bar{X} \sim N\!\left(\mu_X, \frac{\sigma^2}{n}\right), \quad \bar{Y} \sim N\!\left(\mu_Y, \frac{\sigma^2}{m}\right)
+
+\bar{X} - \bar{Y} \sim N\!\left(\mu_X - \mu_Y,\; \sigma^2\!\left(\frac{1}{n} + \frac{1}{m}\right)\right)
+
+Z = \frac{(\bar{X} - \bar{Y}) - \Delta_0}{\sqrt{\sigma^2\!\left(\frac{1}{m} + \frac{1}{n}\right)}} \sim N(0,1)
+
+% Pooled variance
+S_p^2 = \frac{\sum_{i=1}^n (X_i - \bar{X})^2 + \sum_{j=1}^m (Y_j - \bar{Y})^2}{m + n - 2}
+= \frac{(n-1)S_X^2 + (m-1)S_Y^2}{m + n - 2}
+
+\mathbb{E}[S_p^2] = \sigma^2
+
+\frac{(m+n-2)S_p^2}{\sigma^2} \sim \chi^2_{m+n-2}
+
+T = \frac{\bar{X} - \bar{Y} - \Delta_0}{\sqrt{S_p^2\!\left(\frac{1}{m} + \frac{1}{n}\right)}} \sim t_{m+n-2}
+
+% F-distribution
+F = \frac{U/m}{V/n} \sim F_{m,n}
+
+% F-test for equal variances
+\frac{(n-1)S_X^2}{\sigma_X^2} \sim \chi^2_{n-1}, \quad \frac{(m-1)S_Y^2}{\sigma_Y^2} \sim \chi^2_{m-1}
+
+F = \frac{S_X^2}{S_Y^2} \sim F_{n-1,\,m-1}
+
+p = 2\min\!\left\{P(F \leq f \mid F \sim F_{n-1,m-1}),\; P(F \geq f \mid F \sim F_{n-1,m-1})\right\}
+
+% Empirical CDF
+\hat{F}_X(x) = \frac{1}{n} \sum_{i=1}^n \mathbf{1}[x_{(i)} \leq x]
+
+% Normal scores / theoretical quantiles
+z_{(i)} = \Phi^{-1}\!\left(\frac{i - 0.5}{n}\right), \quad i = 1, \ldots, n
+
+% Multiple hypothesis testing
+P(\text{Reject } H_0 \text{ in at least 1 of } r \text{ tests} \mid H_0 \text{ true})
+= 1 - (1-\alpha)^r
+
+% Simple linear regression model
+\mathbb{E}[Y] = \alpha + \beta x
+
+Y = \alpha + \beta x + \epsilon
+
+% Least squares theorem
+\hat{\alpha} = \bar{y} - \hat{\beta}\bar{x}
+
+\hat{\beta} = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^n (x_i - \bar{x})^2}
+
+Q(\alpha,\beta) = \sum_{i=1}^n \{y_i - (\alpha + \beta x_i)\}^2
+
+% Properties of least squares estimators
+\hat{\alpha} = \bar{Y} - \hat{\beta}\bar{x}, \qquad
+\hat{\beta} = \frac{\sum_{i=1}^n (x_i - \bar{x})(Y_i - \bar{Y})}{\sum_{i=1}^n (x_i - \bar{x})^2}
+
+\mathbb{E}[\hat{\beta}] = \beta, \quad \mathbb{E}[\hat{\alpha}] = \alpha
+
+\text{Var}(\hat{\alpha}) = \sigma^2\!\left(\frac{1}{n} + \frac{\bar{x}^2}{(n-1)s_x^2}\right), \qquad
+\text{Var}(\hat{\beta}) = \frac{\sigma^2}{(n-1)s_x^2}
+
+\text{S.E.}(\hat{\alpha}) = \sigma\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{(n-1)s_x^2}}, \qquad
+\text{S.E.}(\hat{\beta}) = \frac{\sigma}{\sqrt{(n-1)s_x^2}}
+
+% Fitted values and residuals
+\hat{y}_i = \hat{\alpha} + \hat{\beta} x_i
+
+e_i = y_i - \hat{y}_i = y_i - \hat{\alpha} - \hat{\beta} x_i
+
+% Residual variance
+s_e^2 = \frac{1}{n-2} \sum_{i=1}^n (y_i - \hat{y}_i)^2
+
+\widehat{\text{S.E.}}(\hat{\alpha}) = s_e\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{(n-1)s_x^2}}, \qquad
+\widehat{\text{S.E.}}(\hat{\beta}) = \frac{s_e}{\sqrt{(n-1)s_x^2}}
+
+% Unbiasedness of S^2_e
+\mathbb{E}[S_e^2] = \sigma^2
+
+% Normal linear regression model
+Y_i \overset{\text{indep.}}{\sim} N(\alpha + \beta x_i,\, \sigma^2), \quad i = 1, \ldots, n
+
+% Distribution of alpha-hat and beta-hat
+\hat{\alpha} \sim N\!\left(\alpha,\; \sigma^2\!\left[\frac{1}{n} + \frac{\bar{x}^2}{(n-1)s_x^2}\right]\right), \qquad
+\hat{\beta} \sim N\!\left(\beta,\; \frac{\sigma^2}{(n-1)s_x^2}\right)
+
+\frac{(n-2)S_e^2}{\sigma^2} \sim \chi^2_{n-2}
+
+\frac{\hat{\alpha} - \alpha}{\sqrt{S_e^2\!\left(\frac{1}{n} + \frac{\bar{x}^2}{(n-1)s_x^2}\right)}} \sim t_{n-2}, \qquad
+\frac{\hat{\beta} - \beta}{\sqrt{\frac{S_e^2}{(n-1)s_x^2}}} \sim t_{n-2}
+
+% 95% CIs for regression parameters
+\hat{\alpha} \pm t_{n-2;\,0.025}\,s_e\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{(n-1)s_x^2}}, \qquad
+\hat{\beta} \pm t_{n-2;\,0.025}\,\frac{s_e}{\sqrt{(n-1)s_x^2}}
+
+% R^2
+R^2 = 1 - \frac{\sum_{i=1}^n (y_i - \hat{y}_i)^2}{\sum_{i=1}^n (y_i - \bar{y})^2}
+
+% CI for E[Y_0]
+\mathbb{E}[Y_0] = \alpha + \beta x_0
+
+\hat{\mathbb{E}}[Y_0] = \hat{\alpha} + \hat{\beta} x_0 = \bar{Y} + \hat{\beta}(x_0 - \bar{x})
+
+\text{Var}(\hat{\mathbb{E}}[Y_0]) = \sigma^2\!\left[\frac{1}{n} + \frac{(x_0-\bar{x})^2}{(n-1)s_x^2}\right]
+
+\frac{\hat{\mathbb{E}}[Y_0] - \mathbb{E}[Y_0]}{\sqrt{S_e^2\!\left(\frac{1}{n} + \frac{(x_0-\bar{x})^2}{(n-1)s_x^2}\right)}} \sim t_{n-2}
+
+\hat{\alpha} + \hat{\beta}x_0 \;\pm\; t_{n-2;\,0.025}\,s_e\sqrt{\frac{1}{n} + \frac{(x_0-\bar{x})^2}{(n-1)s_x^2}}
+
+% Prediction interval for Y_0
+Y_0 = \alpha + \beta x_0 + \epsilon_0
+
+\hat{Y}_0 = \hat{\alpha} + \hat{\beta}x_0 + \epsilon_0 = \hat{\mathbb{E}}[Y_0] + \epsilon_0
+
+\text{Var}(\hat{Y}_0) = \sigma^2\!\left(1 + \frac{1}{n} + \frac{(x_0-\bar{x})^2}{(n-1)s_x^2}\right)
+
+\hat{\alpha} + \hat{\beta}x_0 \;\pm\; t_{n-2;\,0.025}\,s_e\sqrt{1 + \frac{1}{n} + \frac{(x_0-\bar{x})^2}{(n-1)s_x^2}}
+
+% Multiple regression matrix form
+\mathbf{Y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}
+
+Q(\boldsymbol{\beta}) = \sum_{i=1}^n (y_i - \mathbb{E}[Y_i])^2
+= (\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^\top(\mathbf{y} - \mathbf{X}\boldsymbol{\beta})
+
+% Least squares in matrix form
+\hat{\boldsymbol{\beta}} = (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top \mathbf{y}
+
+% Residual variance (multiple regression)
+S_e^2 = \frac{1}{n-p} \sum_{i=1}^n \left[Y_i - (\hat{\beta}_1 x_{i,1} + \cdots + \hat{\beta}_p x_{i,p})\right]^2
+= \frac{1}{n-p}(\mathbf{y} - \mathbf{X}\hat{\boldsymbol{\beta}})^\top(\mathbf{y} - \mathbf{X}\hat{\boldsymbol{\beta}})
+
+% Marginal distribution of beta_j-hat
+\frac{\hat{\beta}_j - \beta_j}{\text{S.E.}(\hat{\beta}_j)} \sim t_{n-p}
+
+% 95% CI for each regression parameter
+\hat{\beta}_j \pm t_{n-p;\,0.025}\;\widehat{\text{S.E.}}(\hat{\beta}_j), \quad j = 1, \ldots, p
+
+% Adjusted R^2
+R^2_{\text{adj.}} = 1 - (1 - R^2)\frac{n-1}{n-p}
+
+% ANOVA F-test definition
+H_0: \beta_{p_0+1} = \cdots = \beta_{p_1} = 0, \quad
+H_1: \exists\, j \in \{p_0+1,\ldots,p_1\} \text{ s.t. } \beta_j \neq 0
+
+F = \frac{(\text{RSS}_0 - \text{RSS}_1)\,/\,(p_1 - p_0)}{\text{RSS}_1\,/\,(n - p_1)} \sim F_{p_1-p_0,\,n-p_1}
+
+\text{RSS}_1 = (n - p_1)S_1^2, \qquad \text{RSS}_0 = (n - p_0)S_0^2
+
+% Categorical binary indicator
+a_{i,j} = \begin{cases} 1, & \text{if sample } i \text{ belongs to category } j \\ 0, & \text{otherwise} \end{cases}
+
+% One-way ANOVA model
+Y_{i,j} \overset{\text{iid}}{\sim} N(\mu_j,\, \sigma^2), \quad i = 1,\ldots,n_j,\; j = 1,\ldots,k
+
+\hat{\mu}_j = \bar{y}_j = \frac{1}{n_j}\sum_{i=1}^{n_j} y_{i,j}
+
+s_e^2 = \frac{1}{n-k}\sum_{j=1}^k \sum_{i=1}^{n_j}(y_{i,j} - \bar{y}_j)^2
+
+% ANOVA decomposition (one-way)
+\sum_{j=1}^k \sum_{i=1}^{n_j}(Y_{i,j} - \bar{Y})^2
+= \sum_{j=1}^k n_j(\bar{Y}_j - \bar{Y})^2
++ \sum_{j=1}^k \sum_{i=1}^{n_j}(Y_{i,j} - \bar{Y}_j)^2
+
+\text{RSS}_y = \text{RSS}_b + \text{RSS}_e
+
+(n-1)S_y^2 = (k-1)S_b^2 + (n-k)S_e^2
+
+F = \frac{\text{RSS}_b\,/\,(k-1)}{\text{RSS}_e\,/\,(n-k)} = \frac{S_b^2}{S_e^2} \sim F_{k-1;\,n-k} \quad \text{under } H_0
+
+% Two-way ANOVA model
+\mu_{i,j} = \mu + \alpha_i + \beta_j
+
+\sum_{i=1}^b \alpha_i = 0, \qquad \sum_{j=1}^k \beta_j = 0
+
+\hat{\mu} = \bar{y}, \quad \hat{\alpha}_i = \bar{y}_{i,\bullet} - \bar{y}, \quad \hat{\beta}_j = \bar{y}_{\bullet,j} - \bar{y}
+
+\bar{y}_{i,\bullet} = \frac{1}{k}\sum_{j=1}^k y_{i,j}, \qquad
+\bar{y}_{\bullet,j} = \frac{1}{b}\sum_{i=1}^b y_{i,j}, \qquad
+\bar{y} = \frac{1}{n}\sum_{i=1}^b\sum_{j=1}^k y_{i,j}
+
+% Two-way ANOVA decomposition
+\sum_{i=1}^b\sum_{j=1}^k (Y_{i,j} - \bar{Y})^2
+= k\sum_{i=1}^b(\bar{Y}_{i,\bullet} - \bar{Y})^2
++ b\sum_{j=1}^k(\bar{Y}_{\bullet,j} - \bar{Y})^2
++ \sum_{i=1}^b\sum_{j=1}^k (Y_{i,j} - \bar{Y}_{i,\bullet} - \bar{Y}_{\bullet,j} + \bar{Y})^2
+
+\text{RSS}_y = \text{RSS}_b + \text{RSS}_t + \text{RSS}_e
+
+(n-1)S_y^2 = (b-1)S_b^2 + (k-1)S_t^2 + (n-b-k+1)S_e^2
+
+F_b = \frac{\text{RSS}_b\,/\,(b-1)}{\text{RSS}_e\,/\,(n-b-k+1)} = \frac{S_b^2}{S_e^2} \sim F_{b-1;\,n-k-b+1}
+
+F_t = \frac{\text{RSS}_t\,/\,(k-1)}{\text{RSS}_e\,/\,(n-b-k+1)} = \frac{S_t^2}{S_e^2} \sim F_{k-1;\,n-k-b+1}
+
+\end{document}

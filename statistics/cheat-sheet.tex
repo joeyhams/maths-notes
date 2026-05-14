@@ -1,0 +1,981 @@
+\documentclass[10pt]{extarticle}
+
+\usepackage[a4paper,margin=1cm,left=1cm,right=1cm]{geometry} 
+\usepackage[UKenglish]{babel}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{proposition}{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\pf}{\mathbb{P}}
+\newcommand{\E}{\mathbb{E}}
+
+\DeclareMathOperator{\Cor}{Cor}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Std}{Std}
+\DeclareMathOperator{\Cov}{Cov}
+
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{graphicx}
+\graphicspath{{./images/}}
+
+\AtBeginDocument{
+  \setlength{\abovedisplayskip}{2pt plus 2pt minus 2pt}
+  \setlength{\belowdisplayskip}{2pt plus 2pt minus 2pt}
+  \setlength{\abovedisplayshortskip}{2pt plus 2pt}
+  \setlength{\belowdisplayshortskip}{2pt plus 2pt minus 2pt}
+}
+
+
+\begin{document}
+
+\begin{multicols}{2}
+
+% Probability
+
+    \noindent
+    {\large\textbf{Probability}}
+
+    $\Omega$ contains all possible outcomes for random phenomena. 
+    $\pf(\cdot)$ maps every event subest $E$ from the sample space to 
+    number on $[0, 1]$. This must satisfy: 
+    \begin{enumerate}
+        \item $\pf(E) \geq 0, \forall E \subset \Omega$,
+        \item $\pf(\Omega) = 1$,
+        \item $\pf(E_1 \cup E_2) = \pf(E_1) + \pf(E_2) \forall E_1,E_2
+            \subset \Omega$ if $\E_1 \cap E_2 = \emptyset$.
+    \end{enumerate}
+
+    \noindent
+    \textbf{PMF/PDF}
+    
+    Let $X$ be a DRV. The pmf for $X$ for all $x \in \R$ is \[ 
+        f_X(x) = 
+        \begin{cases} 
+            \pf(X = x), & x \in \Omega, \\
+            0, & \text{Otherwise.}
+        \end{cases}
+    \]
+    Valid iff $0 \leq f_X(x) \leq 1, \forall x \in \R;$ and $\sum_{x \in
+    \Omega} f_X(x) = 1.$
+    
+    Let $Y$ be a CRV. The pdf for $Y$ for all $y \in \R$ is such that for any 
+    $a, b \in \R$ \[
+        \pf(a \leq Y \leq b) = \int_a^b f_Y(y) dy.
+    \]
+    Note that $\pf(Y=y)=0$.
+    Valid iff $f_Y(y) \geq 0, \forall y \in \R;$ and
+    $\int_{-\infty}^{\infty}f_Y(y)dy = 1.$
+
+    \noindent
+    \textbf{CDF/Quantile}
+
+    The cdf for X (DRV) and Y (CRV) is
+    $$F_X(x) = \pf(X \leq x) = \sum_{u \leq x} f_X(u),$$ and 
+    $$F_Y(y) = \pf(Y \leq y) = \int_{- \infty}^y f_Y(u) du.$$
+
+    The cdf is non-decreasing func with range $[0,1]$ satisfying 
+    $$\lim_{u \to -\infty} F(u) = 0; \lim_{u \to \infty} F(u) = 1;$$ and 
+    $$F(u) - F(v) \geq 0, \forall u, v \in \R, u > v.$$
+
+    By FundTh'mCalc have $f_Y(y) = \frac{d}{dy}F_Y(y).$
+
+    Quantile function is inverse of cdf $F_Y(y)$ (valid since it is bjiective),
+    $q_p = F_Y^{-1}(p)$ for $p \in [0,1]$.
+
+    \noindent
+    \textbf{(Bi/Multi)variate Distributions}
+
+    If $X, Y$ are DRV, then joint pmf is \[ 
+        f_{XY}(x,y) = \pf(X = x \cap Y = y).
+    \]
+    If $X,Y$ are CRV, then joint pdf is def such that they take some value
+    within some region $T \subset \R^2$ given by: \[
+        \pf((X,Y) \in T) = \iint_{(x,y) \in T} f_{XY}(x,y)dxdy.
+    \]
+
+    \textit{Marginal pmf/pdf} describes behaviour of one RV irrespective of 
+    potential values for other RV; \[
+        f_X(x) = 
+        \begin{cases}
+            \sum_y f_{XY}(x, y), & \text{ for DRV $Y$,} \\
+            \int_{\infty}^{\infty} f_{XY}(x, y)dy, & \text{ for DRV $Y$,}
+        \end{cases}
+    \]
+
+    \textit{Conditional pmf/pdf} describes how one RV is distributed when
+    another takes a particular value. Given $Y = y$: \[
+        f_{X | Y} (x | y) = f_X(x) f_Y(y), \text{ where $f_Y(y) > 0$.}
+    \]
+
+    \noindent
+    \textbf{IID}
+
+    $X,Y$ are independent iff the joint pmf/pdf can be expressed as a product
+    of their marginal distributions: \[
+        f_{XY}(x,y) = f_X(x)f_Y(y), \; \forall x,y \in \R.
+    \]
+    In general, \[
+        f_\mathbf{X}(\mathbf{x}) = \prod_{i = 1}^{n} f_{X_i}(x_i), \; \forall
+        \mathbf{x} \in \R^n.
+    \]
+
+    If indep, then $\Cor(X, Y) = 0$. Reverse not nec true. 
+
+    Identically distributed iff they have the same marginal pmf/pdf. 
+
+    If $\mathbf{X}$ is a seq of RV that are iid, then joint pmf/pdf is: 
+    \begin{align*}
+        f_{\mathbf{X}}(\mathbf{x}) &= f(x_1) \cdots f(x_n) \\
+        &=\prod_{i = 1}^{n} f(x_i), \text{ for $\mathbf{x} \in \R^n$}
+    \end{align*}
+
+    \noindent
+    \textbf{Expectation}
+    \[
+        \E[X] = \begin{cases}
+            \sum_x xf_X(x), & \text{for DRV $X$,} \\
+            \int_{-\infty}^{\infty} xf_X(x)dx, & \text{for CRV $X$.}
+        \end{cases}
+    \]
+    Expectation for some transformation of a RV $Z = g(X)$: 
+    \[ 
+        \E[Z] = \E[g(X)] = \begin{cases}
+            \sum_x g(x)f_X(x), & \\
+            \int_{-\infty}^{\infty} g(x)f_X(x)dx. & 
+        \end{cases}
+    \]
+
+    Expectations are invariant to linear transformations: $\E[aX+b] = a\E[X] +
+    b$ for constants $a, b \in \R$.
+
+    Expectation of a sum of RVs is the sum of their expectations: 
+    $\E\left[ \sum_{i=1}^{n} X_i \right] = \sum_{i=1}^n \E[X_i]$.
+
+    If $X,Y$ are indep RVs, then $\E[XY] = \E[X] \E[Y]$.
+
+    \noindent
+    \textbf{Variance}
+    \begin{align*}
+        \Var(X) &= \E\left[ (X - \E[X])^2\right] \\
+                &= \E[X^2] - \E[X]^2 \\
+                &= \E[X(X - \E[X])].
+    \end{align*}
+    Always non-negative. 
+
+    $\Std(X) = \sqrt{\Var(x)}.$
+
+    $\Var(aX + b) = a^2\Var(X), \forall a, b \in \R$.
+
+    If $X_1, \ldots, X_n$ are all independent RV, then: 
+    \[ 
+        \Var\left(\sum_{i=1}^n X_i\right) = \sum_{i=1}^n \Var(X_i)
+    \]
+
+    \noindent
+    \textbf{Covariance/Correlation}
+    \begin{align*}
+        \Cov(X, Y) &= \E[(X - \E[X])(Y - \E[Y])] \\
+                   &= \E[XY] - \E[X] \E[Y] \\
+        \Cor(X, Y) &= \frac{\Cov(X, Y)}{\sqrt{\Var(X)\Var(Y)}}.
+    \end{align*}
+
+    $\Cov(X, X) = \Var(X).$
+
+    When $X, Y$ are indep, then $Cov(X, Y) = 0$. Converse not nec true. 
+
+    $\Cov(aX + b, cY + d) = ac\Cov(X, Y)$, $\forall a, b, c, d \in \R.$
+
+    The variance of a linear combination of two, potentially dependent, RVs is: 
+    $\Var(aX + bY + c) = a^2\Var(X) + b^2\Var(Y) + 2ab\Cov(X, Y),$
+    for constants $a, b, c \in \R$.
+
+    Correlation is unit-less in the range $[-1,1]$ with the sign indication the
+    direction of the linear dependence. Being uncorrelated does not imply
+    independence. 
+
+    \noindent
+    \textbf{Central limit theorem}
+
+    Let $X_1, \ldots, X_n$ be iid RVs from any distribution with expectation $\mu$ 
+    and finite variance $\sigma^2 < \infty$. Then: \[
+        \pf(X_1 + \ldots + X_n \leq x) \to \Phi \left(\frac{x -
+        n\mu}{\sqrt{n}\sigma}\right),
+    \] as $n \to \infty,$ where $\Phi(\cdot)$ denotes the std normal cdf. 
+    Therefore, for a sufficiently large sample size $n$: \[ 
+        \sum_{i=1}^n X_i \sim \text{N}(n\mu, n\sigma^2), 
+    \] or equivalently, \[
+        \bar{X} = \frac{1}{n} \sum_{i = 1}^{n} X_i \sim \text{N}\left(\mu,
+        \frac{\sigma^2}{n} \right).
+    \]
+
+    Generally need $n > 30$ in order to apply the CLT. 
+
+% Basic definitions
+
+    \noindent
+    {\large\textbf{Basic definitions}}
+
+    \textit{Population}: the collection of all items that is the focus of what
+    is being investigated. 
+
+    \textit{Sample}: any subset of the population from which the data (also
+    known as observations and realisations) are collected. 
+
+    \textit{Census}: sample that contains every member of the population
+    exactly once. 
+
+    Sample from a population said to be \textit{representative} if all members
+    of a population have equal chance of being a member of the sample. 
+
+    \textit{Repeated sampling}: assumptive process of taking multiple samples
+    from a population that has same characteristics as observed sample for the
+    purpose of assessing uncertainty in these characteristics.
+
+% Estimators
+
+    \noindent
+    {\large\textbf{Estimators}}
+
+    \textit{Estimator:} func $ T = g(X_1, \ldots, X_n) $ used to estimate 
+    population param. $\theta$
+
+    \textit{Estimate:} particular value the estimator takes for a particular
+    realised sample by applying the function to dataset $t = g(x_1, \ldots,
+    x_n)$. typically notated as a $t$ or by $\hat{\theta}$
+
+    \textit{Unbiased} $T_n$ of $\theta$ if at any sample size $n$, $\E[T_n] = \theta$.
+    Asymptotically unbiased if $\lim_{n \to \infty} \E[T_n] = \theta$.
+
+    $T_n$ is a consistent estimator of $\theta$, if 
+    \setlist{nolistsep}
+    \begin{enumerate}[noitemsep]
+        \item $T_n$ is asymptotically unbiased
+        \item $\Var(T_n) \to 0$ as $n \to \infty$. 
+    \end{enumerate}
+
+    Suppose $X_1 , \ldots , X_n$ represent the random variables of a sample
+    from a population. The sample mean estimator is defined by $\bar{X}$, where,
+    \[
+        \bar{X} = \frac{1}{n} \sum_{i=1}^n X_i.
+    \] $\E[\bar{X}] = \mu, \Var(\bar{X}) = \frac{\sigma^2}{n}.$
+
+    The sample variance estimator is denoted by $S^2$ and given by, \[
+        S^2 = \frac{1}{n-1} \sum_{i=1}^n(X_i-\bar{X})^2.
+    \] $\E[S^2] = \sigma^2.$
+
+    $\bar{X}$ is an unbiased and consistent estimator for $\mu$. 
+    $S^2$ is an unbiased estimator for $\sigma^2$. Also consistent if all fourth
+    moments are equal and finite. 
+
+    Standard Error $\text{S.E.}(\bar{X}) = \sqrt{\Var(\bar{X})} = \frac{\sigma}{\sqrt{n}}.$
+
+    \noindent
+    \textbf{Constructing an estimator}
+
+    \textbf{Method of moments}
+
+    Consider some (population) random variable $X$ with probability density/mass
+    function $f_X(x|\theta)$ that depends on some parameter $\theta$. The $k$th
+    population
+    moment, for $k \in \N$, is defined as the expectation:
+    \begin{equation*}
+        \mu_k := \E [X^k] = \begin{cases}
+            \sum_x x^k f_X(x | \theta), & \text{DRV $X$}, \\
+            \int_{-\infty}^\infty x^k f_X(x | \theta) dx, & \text{CRV $X$.}
+        \end{cases}
+    \end{equation*}
+    Let the random variables $X_1 , \ldots , X_n$ denote a potential sample from the
+    population, then the $k$th sample moment estimator is: \[
+        \overline{X^k} = \frac{1}{n} \sum^n_{i=1} X^k_i.
+    \]
+    Applying this transformation to a given sample, $x_1 , \ldots , x_n$, obtains the
+    $k$th sample moment estimate $\bar{x^k}$.
+
+    Let $x_1 , \ldots , x_n$ be a random sample from a distribution depending on
+    the population parameters $\theta_1 , \ldots , \theta_n$ whose values are
+    unknown. Suppose
+    that these parameters can be expressed as some function of the first $m$ 
+    population moments: \[ 
+        (\theta_1 , \ldots , \theta_n) = h(\mu_1 , \ldots , \mu_m).
+    \]
+
+    The method of moments estimators $T_1, \ldots, T_m$ for the parameters 
+    $\theta_1, \ldots, \theta_m$ are then constructed by applying the
+    transformation $h$ with the corresponding sample moments: \[
+        (T_1, \ldots, T_m) = h(\bar{X}, \ldots, \overline{X^m}). 
+    \]
+
+    \textbf{Advantages} Fairly simple and requires few assumptions about the
+    pop dist; also consitent under a set of rel weak assumptions. 
+
+    \textbf{Limitations} Can only be applied if an expressions for pop moments
+    exists. Typically biased for a limited sample size. May not always satisfy
+    any constraint on the parameter and sample size. 
+
+    \textbf{Maximum likelihood}
+
+    The \textit{likelihood function} is mathematically identical to the joint
+    probability mass/density function for a sample $x_1 , \ldots , x_n$, but
+    instead viewed as a function of the population parameter $\theta$. For an
+    independent and identically distributed sample, the likelihood function is:
+    \[
+        L(\boldsymbol{\theta} | \mathbf{x}) = \prod_{i=1}^n f(x_i | \boldsymbol{\theta}).
+    \]
+
+    The log-likelihood function is simply the natural logarithm of the
+    likelihood function:
+    \begin{align*}
+        \ell(\boldsymbol{\theta} | \mathbf{x}) &= \log{L(\boldsymbol{\theta} | \mathbf{x})} \\
+                                               &= \log\left(\prod_{i=1}^n f(x_i | \boldsymbol{\theta}) \right) \\
+                                               &= \sum_{i=1}^n \log{f(x_i | \boldsymbol{\theta})}
+    \end{align*}
+
+    The \textit{maximum likelihood estimate} for the population parameter
+    $\theta$ is the function of the sample $x_1 , \ldots , x_n$ that maximises
+    the likelihood function:
+    \[
+        \hat{\theta} = \arg\max_\theta L(\theta | \mathbf{x}).
+    \] In practice, find the derivative of $\ell$ with respect to the $\theta$, 
+    then set it to zero and work out what $\theta$ is. Confirm that it actually 
+    maximises the function (2nd derivative is less than zero with $\theta$
+    subbed in).
+
+    \textbf{Advantages} Calculus can be applied to vast majority of likelihood
+    functions. Even if differentiating is difficult, then it can be computed
+    using numerical optimisation algorithms. Although often biased, they are all 
+    consistent. Also invariant to re-parameterisation. 
+
+    \textbf{Limitations} Requires full definition of the joint probability
+    distribution for the sample. Needs generally pretty strong assumptions
+    (e.g. indep and follow a stated distribution)
+
+    \noindent
+    \textbf{Interval Estimation}
+
+    Let $\mathbf{X} = (X_1 , \ldots, X_n)$ represent the vector of sample random
+    variables from some population with unknown parameter $\theta$. For some
+    $\alpha \in [0, 1]$ (typically $\alpha = 0.05$), a $100(1 - \alpha)\%$
+    confidence interval for the
+    parameter $\theta$ is the interval with lower and upper bound estimators 
+    $l(\mathbf{X})$ and $u(\mathbf{X})$ such that: \[
+        \pf(l (\mathbf{X}) < \theta < u(\mathbf{X})) = 1 - \alpha. 
+    \] It then follows that
+    the $100(1 - \alpha)\%$ confidence interval for $\theta$ from the dataset 
+    $x = (x_1 , \ldots , x_n )$ is computed as the interval $(l (\mathbf{x}),
+    u(\mathbf{x}))$. 
+    Generally will only consider the intervals where remaining percentage is split 
+    equally above and below, i.e. 
+    $\pf(l(\mathbf{X} > \theta)) = \pf(u(\mathbf{X} < \theta)) = \frac{\alpha}{2}$
+
+    What is important to note is that this interval contains the unknown fixed parameter
+    with a probability $95\%$ under the principle of repeated sampling. 
+
+    \noindent
+    \textbf{Normal dist with known $\sigma^2$}
+
+    Let $Z = \frac{\bar{X} - \mu}{\sqrt{\sigma^2/n}}$ where $Z \sim \text{N}(0,1)$. 
+    Then the $(1 - \alpha)\%$ confidence interval for $\mu$ is given by: 
+    \[
+        \left( \bar{x} - z_{\alpha/2} \frac{\sigma}{\sqrt{n}}, \bar{x} + z_{\alpha/2} \frac{\sigma}{\sqrt{n}} \right).
+    \]
+
+    Use \verb|qnorm(p, mean, sd)| to calculate the quantiles for this. 
+    For 95\% interval, let $p = 0.975$.
+
+    \noindent
+    \textbf{Confidence interval via the central limit theorem}
+
+    As long as $X_1, \ldots, X_n$ are iid, with known $\sigma^2$, then eventually 
+    we have that $\bar{X}$ converges toward std norm dist according to CLT, i.e.
+    \[
+        \frac{\bar{X} - \mu}{\sqrt{\Var(\bar{X})}} \sim \text{N}(0,1) \text{ as } n \to \infty.
+    \]
+
+    Given $n$ sufficiently large, we have that the confidence interval is \[
+        \left( \bar{X} - z_{\alpha / 2} \frac{\sigma}{\sqrt{n}},\bar{X} + z_{\alpha / 2} \frac{\sigma}{\sqrt{n}} \right)
+    \]
+
+    If we don't know what $\sigma^2$ is then we can use $S^2$ to estimate it. In this case: 
+    \[
+        \left( \bar{x} - z_{\alpha / 2} \sqrt{\frac{s^2}{n}},\bar{x} + z_{\alpha / 2} \sqrt{\frac{s^2}{n}} \right)
+    \]
+
+    \noindent
+    \textbf{Confidence interval for sample mean with small sample size}
+
+    Let $Z_1, \ldots, Z_n$ be indep std norm RVs. Define $X = \sum^n_{i=1} Z^2_i$, 
+    then the RV $X$ has a chi-squared distribution with $n$ degrees of freedom, $X \sim \chi^2_n$.
+
+    Let $Z = \text{N}$ and $Y \sim \chi^2_m$ be indep RVss, then Student's $t$-dist
+    on $m$ degrees of freedom is: \[
+        \frac{Z}{\sqrt{Y/m}} \sim t_m.
+    \] It is symmetric at $0$, more mass in tails compared to std norm. 
+
+    Let $X_1, \ldots, X_n$  be indep normal RVs, with unknown $\mu, \sigma^2$. Then: 
+    \begin{gather*}
+        \bar{X} \& S^2 \text{ are independent} \\
+        \frac{\bar{X} - \mu}{\sqrt{\sigma^2 / n}} \sim \text{N}(0,1) \\
+        \frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{n-1}
+    \end{gather*}
+    Therefore we can define RV $T$, indep of $\sigma$, that follows Student's $t$-dist
+    on $n-1$ degrees of freedom: \[
+        T = \frac{\bar{X} - \mu}{\sqrt{S^2/n}} \sim t_{n-1}.
+    \]
+
+    Confidence interval is: \[
+        \left( \bar{x} - t_{n-1 ; \frac{\alpha}{2}}\sqrt{\frac{s^2}{n}}, \bar{x} + t_{n-1 ; \frac{\alpha}{2}}\sqrt{\frac{s^2}{n}}\right)
+    \]
+    
+    \noindent
+    \textbf{Confidence interval for $S^2$}
+
+    Since, $Y = \frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{n-1}$, we need to find 
+    $\pf\left( \chi^2_{n-1; 1- \frac{\alpha}{2}} \leq Y \leq \chi^2_{n-1; \frac{\alpha}{2}} \right)$
+
+    So for a given dataset the confidence interval is: 
+    \[ 
+    \left( \frac{(n-1)s^2}{\chi^2_{n-1; \frac{\alpha}{2}}}, \frac{(n-1)s^2}{\chi^2_{n-1; \frac{\alpha}{2}}}\right)
+    \]
+
+% Hypothesis Testing
+
+    \noindent
+    {\large\textbf{Hypothesis testing}}
+
+    Steps: 
+    \setlist{nolistsep}
+    \begin{enumerate}[noitemsep]
+        \item State the null and alt hypothesis.
+        \item Select appropriate test statisticand determine dist assuming $H_0$ is true. Under this set the decision rule.
+        \item Compute the observed test statistic from the sampled data. 
+        \item Compare $t$ against decision rule and give a concluding statement.
+    \end{enumerate}
+
+    One sided alt asserts that the deviation from the null occurs in a specific direction. 
+    Two sided alt specifies that the parameter may differ in any direction. 
+
+    Can only either reject the null hypothesis or fail to reject the null hypothesis. 
+
+    A type I error (or false-positive error) occurs when the null hypothesis is
+    incorrectly rejected when it is actually true.
+
+    The probability of incurring a Type I error, 
+    $\pf(\text{Reject }H_0 |H_0
+    \text{is true})$, is called the significance level of the hypothesis test,
+    and is commonly denoted by $\alpha$.
+
+    A type II error, or false-negative, occurs when we incorrectly fail to
+    reject the null hypothesis when the null hypothesis is actually incorrect.
+
+    The probability of incurring a Type II, $$\pf(\text{Fail to reject } H_0
+    |H_0 \text{ is false})$$ is typically denoted by $\beta$.
+
+    The complement of this probability $$\pf(\text{Reject } H_0 |H_0 \text{ is false}) = 1 - \beta,$$
+    is called the power of the test.
+
+    The $p$-value is the probability of obtaining a value for the test statistic
+    random variable, $T$, that is as or more extreme than the observed test
+    statistic, $t$, under the assumption of repeated sampling under the null
+    hypothesis.
+
+    The effect of the phrase `as or more extreme than' on computing the p-value
+    depends on the type and direction of the alternative hypothesis:
+    \setlist{nolistsep}
+    \begin{itemize}[noitemsep]
+        \item one-sided in the positive direction, $H_1 : \theta > \theta_0 \implies p = \pf (T \geq t | T \sim H_0 )$;
+        \item one-sided in the negative direction, $H_1 : \theta < \theta_0 \implies p = \pf (T \leq t | T \sim H_0 )$;
+        \item Two sided, $H_1 : \theta \neq \theta_0 \implies p = 2 \min \{\pf (T \leq t | T \sim H_0 ) , \pf (T \geq t | T \sim H_0 )\}$.
+    \end{itemize}
+
+    \noindent
+    \textbf{Power of a hypothesis test} 
+
+    Increasing significance level, sample size, and effect size increases the power of a hypothesis test. 
+
+    \noindent 
+    \textbf{$Z$-test}
+
+    $X_1, \ldots, X_n$  are indep $\text{N}(\mu, \sigma^2)$ RVs where $\sigma^2$ is known. Use this test statistic: 
+    \[
+        Z = \frac{\bar{X} - \mu_0}{\sqrt{\sigma^2/n}} \sim \text{N}(0, 1),
+    \] where we have $H_0: \mu = \mu_0, H_1: \mu \neq \mu_0.$
+    Then the critical region is $C = \{ z : |z| \geq z_0\}$, $\pf(Z \geq z_0) = \frac{\alpha}{2}$.
+
+    Seems that these are generally two sided. If $z \in C$ then reject. 
+
+    \textbf{Example:} $X_1, \ldots, X_100$, $X_i \sim \text{N}(\mu, 44)$ iid, 
+    then $\bar{X} \sim \text{N}(\mu, 1.44).$ $H_0: \mu = 65$, $H_1: \mu \neq 65.$
+    $Z = \frac{\bar{X} - 65}{1.2} \sim \text{N}(0,1).$ At $5\%$ sig level, we 
+    have that $C = \{z : |z| \geq 1.96\}$. Calculated $z = -1.25$, $z \notin C$, so 
+    fail to reject. Or, with $p$-value, we have 
+    \begin{align*}
+        \pf(|Z| \geq |-1.25|) &= 2\pf(Z \leq -1.25) \\
+                              &= 2\pf(Z \geq 1.25) \\
+                              &\approx 0.2113. > 0.05.
+    \end{align*}
+
+    \noindent
+    \textbf{One-sample-$t$-test}
+
+    $X_1, \ldots, X_n$ be indep $N(\mu, \sigma^2)$ RV, with $\sigma^2$ unknown. 
+    Test statistic: $T = \frac{\bar{X} - \mu_0}{\sqrt{S^2 / n}}$.
+    For tails: $\pf( T \geq t_0 | T \sim t_{n-1}) = \frac{\alpha}{2}.$
+
+    \noindent
+    \textbf{Paired $t$-test}
+
+    Like the one sample test but we have $D_i = X_i - Y_i$ where $\mu_D = \mu_X - \mu_y$. 
+    $\sigma^2_D$ is the unknown variance of the differences. 
+    
+    Test statistic: $T = \frac{\bar{D} - \mu_0}{\sqrt{S^2 / n}} \sim t_{n-1}$.
+
+    \noindent
+    \textbf{two sample $t$ test} 
+
+    $X_1, \ldots, X_n$, $Y_1, \ldots, Y_m$  
+    We have $H_0: \mu_X - \mu_Y = \Delta_0, H_1: \mu_X - \mu_Y \neq \Delta_0$.
+    So 
+    \begin{gather*} 
+        \bar{X} \sim N(\mu_X, \frac{\sigma^2}{n}, \bar{Y} \sim N(\mu_Y, \frac{\sigma^2}{m} \\
+        \bar{X} - \bar{Y} \sim N(\mu_X - \mu_Y, \sigma^2(\frac{1}{n} + \frac{1}{m})) \\
+        Z = \frac{(\bar{X} - \bar{Y}) - \Delta_0}{\sqrt{\sigma^2 (\frac{1}{m} + \frac{1}{n}}} \sim N(0, 1). \\
+        S^2_p = \frac{\sum_{i=1}^{n}(X_i - \bar{X})^2 + \sum_{j=1}^m(Y_j - \bar{Y})^2}{m+n-2} \\
+        S^2_p = \frac{(n-1)S^2_X + (m-1)S^2_Y}{m + n - 2}
+    \end{gather*}
+
+    $S_P^2$ is an unbiased estimator for $\sigma^2$
+
+    Test statistic: $T = \frac{\bar{X} - \bar{Y} - \Delta_0}{\sqrt{S^2_P(\frac{1}{m} + \frac{1}{n}}} \sim t_{m+n-2} $
+
+    \noindent
+    \textbf{$F$-test for equal variances}
+
+    Assessment of whether the two population variances are equal. Wish to test: 
+    \[ H_0: \sigma^2_X = \sigma^2_Y, H_1: \sigma^2_X \neq \sigma^2_Y.\]
+
+    Let $U \sim \chi^2_m$, and $V \sim \chi^2_n.$ Then 
+    \[ F = \frac{U / m}{V / n} \sim F_{m,n}.\]
+
+    Test statistic: $F = \frac{S^2_X}{S^2_Y} \sim F_{n-1, m-1}.$ 
+
+    Would need to do \verb|qf(c(lower, upper), df1, df2)|. 
+
+    \noindent
+    \textbf{Assessing normality}
+
+    \textbf{The empirical cumulative distribution function}
+
+    Consider the observed sample $x_1, \ldots, x_n$ from some common random
+    variable $X$. Let the notation $x_{(i )}$ denote the $i$th sample in ascending
+    order so that $x_{(i )} \leq x_{(i +1)}$ with $x_{(1)}$ as the minimum value and $x_{(n)}$ 
+    is the largest. The empirical cumulative distribution function is a
+    step-wise function mapping the sample space to the unit space of cumulative
+    probabilities, $\hat{F}_X : \R \to [0, 1]$. Specifically, it is defined as: \[
+    \hat{F}_X(x) = \frac{1}{n} \sum^n_{i=1} \mathbb{I} [ x_{(i)} \leq x]. \]
+
+    From this we see that the samples should follow a roughly `S' shaped curve.  
+
+    Generated using \verb|ecdf()|.
+
+    For quantile-quantile plot do \verb|qqnorm(x)| and \verb|qqline(x)|.
+
+    Dots should be roughly along a straight line.
+
+    \noindent
+    {\large\textbf{Linear regression}}
+
+    Consider the simple linear regression model with a single explanatory
+    variable, $\E [Y ] = \alpha+\beta x$. Suppose we have a data set consisting
+    of the
+    explanatory and response data pairs $(x_1 , y_1 ), \ldots , (x_n , y_n )$,
+    then the least-squares estimates, $\hat{\alpha}$ and $\hat{\beta},$ that
+    minimise the sum
+    of squares
+    formula are:
+    \begin{gather*}
+        \hat{\alpha} = \bar{y} - \hat{\beta}\bar{x} \\
+        \hat{\beta} = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^n (x_i - \bar{x})^2} = \frac{s_{xy}}{s^2_x} = r\frac{s_{y}}{s_x} \\
+        Q(\alpha,\beta) = \sum_{i=1}^n \{y_i - (\alpha + \beta x_i)\}^2
+    \end{gather*}
+    The overall discrepancy between the data and the model can be expressed by the
+    sum of squares formula, $Q(\alpha, \beta)$. 
+
+    Consider the simple linear regression model $Y_i = \alpha + \beta x_i + \epsilon_i$ for 
+    $i = 1, \ldots , n$ with independent error random variables that have zero expectation,
+    $E [\epsilon_i ] = 0$, and constant variance, $\Var (\epsilon_i ) =
+    \sigma^2 $. Both least-squares estimators are unbiased and consistent in
+    estimating the regression parameters.
+
+    The fitted values, or predicted values, $\hat{Y}_1 , \ldots , \hat{y}_n$
+    are the response
+    values obtained by substituting the corresponding explanatory values into
+    the fitted regression line: 
+    \[ \hat{y}_i = \hat{\alpha} + \hat{\beta}x_i \text{ for } i = 1, \ldots, n. \]
+
+    The residuals, $e_1 , \ldots , e_n$ , are the differences between the observed
+    and predicted response values:
+    \[ e_i = y_i - \hat{y}_i = y_i - \hat{\alpha} - \hat{\beta}x_i \text{ for } i = 1, \ldots, n.\]
+
+    The residual sum of squares is defined to be the sum of the squared errors
+    between the observed responses $y_i$ and the predicted value $\hat{y}_i$ from the
+    simple linear regression model, $\sum_{i=1}^n (y_i - \hat{y}_i )^2$. From
+    this, we define
+    the least-squares estimate of $\sigma^2$ , also known as the residual variance, as:
+    \[ s_e^2 = \frac{1}{n-2} \sum_{i=1}^n (y_i - \hat{y}_i)^2 \]
+    This is unbiased in estimating $\sigma^2$. 
+    \begin{gather*}
+        \widehat{\text{S.E.}}(\hat{\alpha}) = s_e\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{(n-1)s_x^2}}, \qquad \\
+        \widehat{\text{S.E.}}(\hat{\beta}) = \frac{s_e}{\sqrt{(n-1)s_x^2}}
+    \end{gather*}
+
+    \begin{gather*}
+        Y_i \overset{\text{indep.}}{\sim} N(\alpha + \beta x_i,\, \sigma^2), \quad i = 1, \ldots, n \\
+        \hat{\alpha} \sim N\!\left(\alpha,\; \sigma^2\!\left[\frac{1}{n} + \frac{\bar{x}^2}{(n-1)s_x^2}\right]\right), \qquad \\
+        \hat{\beta} \sim N\!\left(\beta,\; \frac{\sigma^2}{(n-1)s_x^2}\right) \\
+    \end{gather*}
+
+    The maximum likelihood estimates for the regression parameters $\alpha$ and $\beta$ in
+    the normal linear regression model are the least-squares estimates $\hat{\alpha}$ and
+    $\hat{\beta}.$ 
+
+    The distribution of residual variance estimator is: 
+    \[ \frac{(n-2)S_e^2}{\sigma^2} \sim \chi^2_{n-2}. \]
+ 
+    $\hat{\alpha}$ and $\hat{\beta}$ are independent of $S^2_e$, marginal dist: 
+    \begin{gather*}
+        \frac{\hat{\alpha} - \alpha}{\sqrt{S_e^2\!\left(\frac{1}{n} + \frac{\bar{x}^2}{(n-1)s_x^2}\right)}} \sim t_{n-2}, \qquad \\
+        \frac{\hat{\beta} - \beta}{\sqrt{\frac{S_e^2}{(n-1)s_x^2}}} \sim t_{n-2} 
+    \end{gather*}
+
+    The 95\% confidence interval for $\alpha$ and $\beta$ are: 
+    \begin{gather*}
+        \hat{\alpha} \pm t_{n-2;\,0.025}\,s_e\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{(n-1)s_x^2}}, \\
+        \hat{\beta} \pm t_{n-2;\,0.025}\,\frac{s_e}{\sqrt{(n-1)s_x^2}}
+    \end{gather*}
+
+    \begin{verbatim}
+Usage: lm(formaula, data)
+Inputs: 
+formula - the linear model expression of the 
+form y ~ x
+data - a data frame containing the variables 
+used in the formula
+    \end{verbatim}
+    Use \verb|summary(model)| in order to get information about the 
+    residuals, coefficients (least squares estimate for each regression
+    param and their std error), residual std error, multiple $R^2$, and the 
+    $F$-statistic (test stat and df for corresponding $F$-dist)
+    
+    In the case of a single explanatory var, you have $R^2 = \frac{s^2_{xy}}{s^2_x s^2_y}$
+    Between $[0, 1]$. Want it to be close to 1. Should be used to compare, not say 
+    if any one model is good or bad. 
+
+    \noindent
+    \textbf{Confidence interval for $\E[Y_0]$}
+
+    Essentially for a given $x_0$ in the dataset already. 
+    \[ \frac{\hat{\E}[Y_0] - \E[Y_0]}{\sqrt{S^2_e \left( \frac{1}{n} + \frac{(x_0 - \bar{x})^2}{(n-1)s_x^2}\right)}} \sim t_{n-2} \]
+    \[ \hat{\alpha} + \hat{\beta}x_0 \;\pm\; t_{n-2;\,0.025}\,s_e\sqrt{\frac{1}{n} + \frac{(x_0-\bar{x})^2}{(n-1)s_x^2}} \]
+
+    \noindent
+    \textbf{Prediction interval for $\E[Y_0]$}
+
+    For a potential future observation of $Y_0$ at $x_0$. 
+    
+    \begin{gather*}
+        Y_0 = \alpha + \beta x_0 + \epsilon_0 \\
+        \hat{Y}_0 = \hat{\alpha} + \hat{\beta}x_0 + \epsilon_0 = \hat{\mathbb{E}}[Y_0] + \epsilon_0 \\
+        \text{Var}(\hat{Y}_0) = \sigma^2\!\left(1 + \frac{1}{n} + \frac{(x_0-\bar{x})^2}{(n-1)s_x^2}\right) \\
+        \hat{\alpha} + \hat{\beta}x_0 \;\pm\; t_{n-2;\,0.025}\,s_e\sqrt{1 + \frac{1}{n} + \frac{(x_0-\bar{x})^2}{(n-1)s_x^2}}
+    \end{gather*}
+
+    \begin{verbatim}
+Usage: 
+predict(object (model that you already have), 
+newdata, 
+interval = c("none", "confidence", "prediction"),
+level = 0.95)
+Inputs: 
+object - the linear regression object from lm()
+newdata - a data frame with the new explanatory 
+variables x_0
+interval - type of interval to compute
+level - confidence level of the interval
+    \end{verbatim}
+    This gives you the value(s) of $y_0$ for a given $x_0$
+
+    \noindent 
+    \textbf{Checking assumptions}
+
+    The normal linear regression model specifies that $Y_i sim N (\alpha + \beta x_i , \sigma^2 )$ 
+    for $i = 1, \ldots , n$. The assumptions made in defining this statistical
+    model are:
+    \begin{enumerate}
+        \item Independence between response variables;
+        \item Linearity of the expectation, $\E(Y_i ) = \alpha + \beta x_i$;
+        \item Homoscedasticity (i.e. have the same variance); and,
+        \item Normally distributed.
+    \end{enumerate}
+
+    \textbf{Residuals vs Fitted}
+    This is a scatter plot of the residuals $e_1 , \ldots , e_n$ against fitted
+    values $\hat{y}_1 , \ldots , \hat{y}_n$ . If the linear assumption $\E [Y ] = \alpha +
+    \beta x$ is true
+    then the residuals should be randomly scattered around zero with no
+    discernible clustering or pattern. Furthermore, we can also use this plot
+    to check the homoscedastic (constant variance) assumption to see whether
+    the range of the scatter of points is consistent over the range of fitted
+    values. This visual assessment can be challenging to perform accurately, so
+    we may instead examine the next plot.
+
+    \textbf{Scale-Location}
+    This is a scatter plot of the transformation of the standardized residuals
+    $\sqrt{|e_1^*|}, \ldots , \sqrt{|e_n^*|} $ against fitted values $\hat{y}_1 ,
+    \ldots , \hat{y}_n$ . This is
+    used to assess the homoscedastic (constant variance) assumption where, if
+    true, we should expect the points to be randomly scattered around a
+    constant value $(\sim 0.82)$ across the range of fitted values.
+
+    \textbf{Normal QQ-plot}
+    This is a normal QQ-plot of the standardised residuals$e_1^* , \ldots , e_n^*$ 
+    where $e_i* = \frac{e_i}{s_e}$ for $i = 1, \ldots , n$. If the assumption that the
+    response random variables are independent and normally distributed then we
+    can consider the standardised residuals as a sample of $n$ values from the
+    standard normal distribution.
+
+    Can get these in \verb|R| using \verb|plot(model)|.
+
+    Remember that this is correlation not causation. 
+
+    \noindent 
+    {\large\textbf{Multiple regression}}
+
+    Consider the linear regression model $\underline{Y} = \mathbf{X}
+    \underline{\beta}+ \underline{\epsilon}$, expressed in matrix notation,
+    where $\underline{Y}$ is the response vector random variable, $\mathbf{X}$
+    is the $n \times p$ design
+    matrix containing the explanatory variables,
+    $\underline{\beta}$ is the vector or regression parameters and
+    $\underline{\epsilon}$ is the vector of
+    random errors where each element is
+    independent with $\E [\epsilon_i ] = 0$ and $\Var (\epsilon_i ) = \sigma^2$
+    . The least-squares vector estimate $\hat{\beta} = (\hat{\beta}_1 , \ldots
+    , \hat{\beta}_p )^T$ that
+    minimises the sum of squared formula $Q(\underline{\beta}) = (\underline{y}
+    - \mathbf{X} \underline{\beta})^T (\underline{y} - \mathbf{X} \underline{\beta})$ is:
+    \[ \hat{\beta} = (\mathbf{X}^T \mathbf{X} )^{-1} \mathbf{X}^T \underline{y}. \]
+
+    Need to ensure that all of the columns of $\mathbf{X}$ are linearly
+    independent.
+
+    Residual variance for multiple regression:
+    \begin{align*}
+    % Residual variance (multiple regression) \\
+        S_e^2 &= \frac{1}{n-p} \sum_{i=1}^n \left[Y_i - (\hat{\beta}_1 x_{i,1} + \cdots + \hat{\beta}_p x_{i,p})\right]^2 \\
+        &= \frac{1}{n-p}(\mathbf{y} - \mathbf{X}\hat{\boldsymbol{\beta}})^\top(\mathbf{y} - \mathbf{X}\hat{\boldsymbol{\beta}}) \\
+    \end{align*}
+
+    Marginal distribution of $\hat{\beta}_h$
+    % Marginal distribution of beta_j-hat \\
+    \[ \frac{\hat{\beta}_j - \beta_j}{\text{S.E.}(\hat{\beta}_j)} \sim t_{n-p} \] 
+    Confidence interval for each $\hat{\beta}_h$.
+    % 95% CI for each regression parameter \\
+    \[ \hat{\beta}_j \pm t_{n-p;\,0.025}\;\widehat{\text{S.E.}}(\hat{\beta}_j), \quad j = 1, \ldots, p \]
+
+    Adjusted $R^2$ takes into account the number of variables in regression model:
+    % Adjusted R^2 \\
+    \[ R^2_{\text{adj.}} = 1 - (1 - R^2)\frac{n-1}{n-p} \]
+
+    \noindent
+    \textbf{ANOVA $F$-test for model comparison}
+
+    \begin{gather*}
+        \text{ANOVA F-test definition:} \\
+        H_0: \beta_{p_0+1} = \cdots = \beta_{p_1} = 0, \quad \\
+        H_1: \exists\, j \in \{p_0+1,\ldots,p_1\} \text{ s.t. } \beta_j \neq 0 \\
+        F = \frac{(\text{RSS}_0 - \text{RSS}_1)\,/\,(p_1 - p_0)}{\text{RSS}_1\,/\,(n - p_1)} \sim F_{p_1-p_0,\,n-p_1} \\
+        \text{RSS}_1 = (n - p_1)S_1^2, \qquad \text{RSS}_0 = (n - p_0)S_0^2 \\
+        \text{Categorical binary indicator:} \\
+        a_{i,j} = \begin{cases} 1, & \text{if sample } i \text{ belongs to category } j \\ 0, & \text{otherwise} \end{cases} \\
+        \text{One-way ANOVA model:} \\
+        Y_{i,j} \overset{\text{iid}}{\sim} N(\mu_j,\, \sigma^2), \quad i = 1,\ldots,n_j,\; j = 1,\ldots,k \\
+        \hat{\mu}_j = \bar{y}_j = \frac{1}{n_j}\sum_{i=1}^{n_j} y_{i,j} \\
+        s_e^2 = \frac{1}{n-k}\sum_{j=1}^k \sum_{i=1}^{n_j}(y_{i,j} - \bar{y}_j)^2 \\
+        \text{ANOVA decomposition (one-way):} \\
+        \sum_{j=1}^k \sum_{i=1}^{n_j}(Y_{i,j} - \bar{Y})^2 \\
+        = \sum_{j=1}^k n_j(\bar{Y}_j - \bar{Y})^2 \\
+        + \sum_{j=1}^k \sum_{i=1}^{n_j}(Y_{i,j} - \bar{Y}_j)^2 \\
+        \text{RSS}_y = \text{RSS}_b + \text{RSS}_e \\
+        (n-1)S_y^2 = (k-1)S_b^2 + (n-k)S_e^2 \\
+        F = \frac{\text{RSS}_b\,/\,(k-1)}{\text{RSS}_e\,/\,(n-k)} = \frac{S_b^2}{S_e^2} \sim F_{k-1;\,n-k} \quad \text{under } H_0 \\
+    \end{gather*}
+    \begin{gather*}
+        \text{Two-way ANOVA model:} \\
+        \mu_{i,j} = \mu + \alpha_i + \beta_j \\
+        \sum_{i=1}^b \alpha_i = 0, \qquad \sum_{j=1}^k \beta_j = 0 \\
+        \hat{\mu} = \bar{y}, \quad \hat{\alpha}_i = \bar{y}_{i,\bullet} - \bar{y}, \quad \hat{\beta}_j = \bar{y}_{\bullet,j} - \bar{y} \\
+        \bar{y}_{i,\bullet} = \frac{1}{k}\sum_{j=1}^k y_{i,j}, \qquad \\
+        \bar{y}_{\bullet,j} = \frac{1}{b}\sum_{i=1}^b y_{i,j}, \qquad \\
+        \bar{y} = \frac{1}{n}\sum_{i=1}^b\sum_{j=1}^k y_{i,j} \\
+        \text{Two-way ANOVA decomposition:} \\
+        \sum_{i=1}^b\sum_{j=1}^k (Y_{i,j} - \bar{Y})^2 \\
+        = k\sum_{i=1}^b(\bar{Y}_{i,\bullet} - \bar{Y})^2 \\
+        + b\sum_{j=1}^k(\bar{Y}_{\bullet,j} - \bar{Y})^2 \\
+        + \sum_{i=1}^b\sum_{j=1}^k (Y_{i,j} - \bar{Y}_{i,\bullet} - \bar{Y}_{\bullet,j} + \bar{Y})^2 \\
+        \text{RSS}_y = \text{RSS}_b + \text{RSS}_t + \text{RSS}_e \\
+        (n-1)S_y^2 = (b-1)S_b^2 + (k-1)S_t^2 + (n-b-k+1)S_e^2 \\
+        F_b = \frac{\text{RSS}_b\,/\,(b-1)}{\text{RSS}_e\,/\,(n-b-k+1)} = \frac{S_b^2}{S_e^2} \sim F_{b-1;\,n-k-b+1} \\
+        F_t = \frac{\text{RSS}_t\,/\,(k-1)}{\text{RSS}_e\,/\,(n-b-k+1)} = \frac{S_t^2}{S_e^2} \sim F_{k-1;\,n-k-b+1}
+    \end{gather*}
+
+% Common Distributions
+
+    \noindent
+    {\large\textbf{Common Distributions}}
+
+    \noindent
+    \textbf{Discrete}
+
+    \textbf{Bernoulli}, $p \in [0, 1]X \sim \text{Bern}(p).$
+
+    Params: Probablility, .
+    $f_X(x) = p^x(1-p)^{1-x}$, for $x \in \{0,1\}$.
+    $\E[X] = p, \Var(X) = p(1-p)$.
+
+    \textbf{Binomial}, $X \sim \text{Binom}(n, p)$.
+
+    Params: Sample Size, $n \in \N$; Probablility, $p \in [0, 1]$.
+    $f_X(x) = \binom{n}{x}p^x(1-p)^{n-x}$, for $x \in \{0, 1, \ldots, n\}$.
+    $\E[X] = np, \Var(X) = np(1-p)$.
+
+    \textbf{Geometric}, $X \sim \text{Geom}(p)$.
+
+    Params: Probablility, $p \in [0, 1]$.
+    $f_X(x) = p(1-p)^{x - 1}$, for $x \in \{1, 2, \ldots\}$.
+    $\E[X] = \frac{1}{p}, \Var(X) = \frac{1-p}{p}$.
+
+    \textbf{Poisson}, $X \sim \text{Pois}(\lambda)$.
+    
+    Params: Rate, $\lambda > 0$.
+    $f_X(x) = \frac{\lambda^x \exp(-\lambda)}{x!}$, for $x \in \{0, 1, 2, \ldots\}$.
+    $\E[X] = \lambda, \Var(X) = \lambda$.
+
+    \noindent
+    \textbf{Continuous}
+
+    \textbf{Uniform}, $X \sim \text{Unif}(a, b)$.
+
+    Params: Limits, $a, b \in \R$.
+    $f_X(x) = \frac{1}{b - a}$, for $x \in [a, b]$.
+    $\E[X] = \frac{a + b}{2}, \Var(X) = \frac{(b - a)^2}{12}$.
+
+    \textbf{Exponential}, $X \sim \text{Exp}(\lambda)$.
+
+    Params: Rate, $\lambda > 0$.
+    $f_X(x) = \lambda \exp(-\lambda x)$, for $x \in [0, \infty)$.
+    $\E[X] = \frac{1}{\lambda}, \Var(X) = \frac{1}{\lambda^2}$.
+
+    \textbf{Gamma}, $X \sim \Gamma(\alpha, \beta)$.
+
+    Params: Shape, $\alpha > 0$; Rate, $\beta > 0$.
+    $f_X(x) = \frac{\beta^\alpha}{\Gamma(\alpha)} x^{\alpha - 1} \exp(-\beta x)$, for $x \in [0, \infty)$.
+    $\E[X] = \frac{\alpha}{\beta}, \Var(X) = \frac{\alpha}{\beta^2}$.
+
+    \textbf{Beta}, $X \sim \text{Beta}(\alpha, \beta)$.
+
+    Params: Shapes, $\alpha, \beta > 0$.
+    $f_X(x) = \frac{x^{\alpha - 1}(1-x)^{\beta - 1}}{B(\alpha, \beta)}$, 
+    for $x \in [0, 1]$.
+    $\E[X] = \frac{\alpha}{\alpha + \beta}, 
+    \Var(X) = \frac{\alpha\beta}{(\alpha + \beta)^2(\alpha + \beta + 1)}$.
+
+    \textbf{Normal}, $X \sim \text{N}(\mu, \sigma^2)$.
+
+    Params: Expectation, $\mu \in \R$; Std Deviation, $\sigma > 0$.
+    $f_X(x) = \frac{1}{\sqrt{2 \pi \sigma^2}}\exp\left\{ \frac{-(x - \mu)^2}{2
+    \sigma^2} \right\}$, for $x \in \R$.
+    $\E[X] = \mu, \Var(X) = \sigma^2$.
+    \textit{Sum of normals is normal, note that $\bar{X} \sim \text{N}(\mu, \frac{\sigma}{n}$}
+
+    \textbf{Chi-Squared}, $X \sim \chi^2_{v}$.
+
+    Params: Degree of Freedom, $v > 0$.
+    $f_X(x) = \frac{1}{2^{\frac{v}{2}}\Gamma\left(\frac{k}{2}\right)}
+            x^{\frac{v}{2}-1} \exp\left(\frac{x}{2}\right),$
+    for $x \in [0, \infty)$.
+    $\E[X] = v, \Var(X) = 2v$.
+
+    \textbf{Student's $\mathbf{t}$}, $X \sim t_v$.
+
+    Params: Degree of Freedom, $v > 0$.
+    $f_X(x) = \frac{1}{\sqrt{v}B\left(\frac{v}{2},\frac{1}{2}\right)}
+    \left(1 + \frac{x^2}{v}\right)^{-\frac{v+1}{2}},$
+    for $x \in \R$.
+    $\E[X] = 0, \Var(X) = \frac{v}{v-2}(v > 2)$.
+
+    \textbf{Cauchy}, $X \sim \text{Cauchy} (X \sim t_1)$.
+
+    No parameters. 
+    $f_X(x) = \frac{1}{\pi (1 + x^2)}$ for $x \in \R$.
+    Both $\E[X]$ and $\Var(X)$ are undefined.
+
+    \textbf{F}, $X \sim \text{F}(\lambda, v)$.
+
+    Params: Degrees of Freedom, $\lambda, v > 0$.
+    $f_X(x) = \frac{\lambda^{\frac{\lambda}{2}}v^{\frac{v}{2}}}{B\left(\frac{\lambda}{2},\frac{v}{2}\right)}
+    x^{\frac{\lambda}{2} - 1}(\lambda x + v)^{- \frac{\lambda + v}{2}}$,
+    for $x \in [0, \infty)$. 
+    $\E[X] = \frac{v}{v - 2} (v > 2), 
+    \Var(X) = \frac{2v^2(\lambda + v - 2)}{\lambda(v - 2)^2(v - 4)} (v > 4) $
+
+% Common R Commands
+
+    \noindent
+    {\large\textbf{Common R Commands}}
+
+    \verb|qnorm(p, mean, sd)|
+    \verb|qt(p, df)|
+
+    \verb|q-| is the quantile function
+    \verb|p-| is the cdf
+    \verb|d-| gives the density
+    \verb|r-| gives random values
+
+    \begin{verbatim}
+Usage: t.test(x, y = NULL, 
+alternative = c("two.sided", "less", "greater"),
+mu = 0, 
+paired = FALSE, 
+var.equal = FALSE, 
+conf.level = 0.95)
+
+Inputs: x, y - Vectors containing the sample data. 
+alternative - Type of alternative hypothesis, 
+two-sided stated by default. 
+mu - The expected value assumed under the null 
+hypothesis. 
+paired - If TRUE, then performing a paired t-test. 
+var.equal - If TRUE, then populations have equal 
+variance in 2-sample t-test. 
+conf.level - Confidence level of the test, equal 
+to ‘1 - significance level’.
+    \end{verbatim}
+\end{multicols}
+
+\end{document}
