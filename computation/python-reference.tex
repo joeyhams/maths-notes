@@ -7,6 +7,8 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 
+\usepackage{multicol}
+
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
 \newtheorem{corollary}{Corollary}[theorem]
@@ -21,16 +23,7 @@
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Q}{\mathbb{Q}}
-
-% Example
 % \DeclareMathOperator{\dom}{dom}
-
-\usepackage{graphicx}
-\graphicspath{{./images/}}
-
-% UNCOMMENT IF USING REFERENCES
-% \usepackage[notes, backend=biber]{biblatex-chicago}
-% \addbibresource{refs.bib} 
 
 \title{Python Quick Reference}
 \author{joel}
@@ -40,6 +33,73 @@
 
 \maketitle
 
-\section{}
+\section{SymPy}
+
+Generally want to do \verb|from sympy import *| otherwise things get annoying fast. 
+Also, using the REPL is actually quite helpful. 
+Can do \verb|uv run --with sympy python| for a REPL environment with SymPy. 
+\verb|init_printing()| will `pretty print' results in a way that is often more
+readable than the regular form. 
+ 
+\subsection{Basic operations}
+
+Create symbols, expressions and evaluate constants:
+\begin{verbatim}
+>>> x = symbols('x')
+>>> y = symbols('y')
+>>> expr = (x + 1)**4       
+>>> pi.evalf(10) 
+3.141592654
+\end{verbatim}
+Note that \verb|expr| here is arbitrary, it's just a variable name. 
+
+There are two ways to evaluate an expression at a particular value:
+\begin{verbatim}
+>>> expr.evalf(subs={x: 3})
+256.000000000000
+>>> expr.subs(x, 3).evalf()
+256.000000000000
+\end{verbatim}
+
+For multiple substitutions, use a list of tuples, like:
+\begin{verbatim}
+>>> expr1 = (x + y*x + y**2)**3
+>>> expr1.subs([(x, 1), (y, 2)]).evalf()
+343.000000000000
+\end{verbatim}
+
+Factorise expressions: 
+\begin{verbatim}
+>>> expr2 = x**4 - 1
+>>> expr2.factor()
+(x - 1)*(x + 1)*(x**2 + 1)
+\end{verbatim}
+
+Simply expressions: 
+\begin{verbatim}
+>>> expr3 = (x**2 - 4) / (x - 2)
+>>> expr3.simplify()
+x + 2
+>>> cancel(expr3)
+x + 2
+\end{verbatim}
+
+\textbf{N.B Quotients:} using / is fine when symbols are involved, but when you have 
+a quotient of two explicit numbers $a, b$, then use \verb|Rational(a, b)|. 
+
+\subsection{Calculus} 
+
+Find limits of expressions ($\infty$ is denoted by `oo'): 
+\begin{verbatim}
+    >>> limit(sin(x)/x, x, 0) 
+    1
+    >>> limit(1/x, x, oo)
+    0
+    >>> limit(1/x, x, 0, '+')
+    oo
+    >>> limit(1/x, x, 0, '-')
+    -oo
+\end{verbatim}
+
 
 \end{document}
