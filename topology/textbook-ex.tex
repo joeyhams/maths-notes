@@ -1,0 +1,59 @@
+\documentclass[10pt]{article} 
+
+\usepackage[a4paper,margin=2cm,left=2cm,right=2cm]{geometry} 
+\usepackage[UKenglish]{babel}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{proposition}{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+
+% Example
+% \DeclareMathOperator{\dom}{dom}
+
+\usepackage{graphicx}
+\graphicspath{{./images/}}
+
+% UNCOMMENT IF USING REFERENCES
+% \usepackage[notes, backend=biber]{biblatex-chicago}
+% \addbibresource{refs.bib} 
+
+\title{Topology by Marco Manetti, Exercises}
+\author{joel}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Geometrical Introduction}
+
+Suppose $\Gamma$ is a connected graph where each node has even degree. Prove
+that every graph obtained by removing one edge from $\Gamma$ is still connected.
+
+\begin{proof}
+    To show that $\Gamma$ is still connencted, we have to show that there exists 
+    a walk from $v_0$ to $v_k$ where $v_0, v_k$ are the nodes between which an 
+    edge has been removed. Since before the removal we have an Eulerian graph,
+    we consider the edge that is removed to be the last edge in the walk.
+    We still have a walk that reaches every point in the graph, since every edge
+    has been traversed. 
+\end{proof}
+
+
+
+\end{document}

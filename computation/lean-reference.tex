@@ -1,0 +1,62 @@
+\documentclass[10pt]{article} 
+
+\usepackage[a4paper,margin=2cm,left=2cm,right=2cm]{geometry} 
+\usepackage[UKenglish]{babel}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{proposition}{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+
+% Example
+% \DeclareMathOperator{\dom}{dom}
+
+\usepackage{graphicx}
+\graphicspath{{./images/}}
+
+% UNCOMMENT IF USING REFERENCES
+% \usepackage[notes, backend=biber]{biblatex-chicago}
+% \addbibresource{refs.bib} 
+
+\title{Lean Reference}
+\author{joel}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Tactics}
+
+Almost everything that you will do in Lean is done through tactics if you are using 
+it as a proof assistant as opposed to a pure functional programming language. 
+
+\verb|rfl| (reflexivity (wrt equality)) is the tactic that states that two
+things are equal. 
+
+\verb|rw [h]| (rewrite) is the tactic that given a theorem \verb|h: X = Y| we
+make the substituion of all $X$ to $Y$. Adding an arrow before the $h$,
+(denoted by $\l$) gives the opposite, i.e turns all $Y$ into $X$. 
+
+Can also do \verb|repeat rw [h]| in order to do it multiple times, by default
+will only convert the first instance of it. 
+
+
+
+% \printbibliography
+
+\end{document}

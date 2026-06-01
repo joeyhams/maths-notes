@@ -1,0 +1,181 @@
+\documentclass[10pt]{article}
+
+\usepackage[a4paper,margin=2cm,left=2cm,right=2cm]{geometry}
+\usepackage[UKenglish]{babel}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumitem}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{proposition}{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+
+% Example
+% \DeclareMathOperator{\dom}{dom}
+
+\usepackage{graphicx}
+\graphicspath{{./images/}}
+
+% UNCOMMENT IF USING REFERENCES
+% \usepackage[notes, backend=biber]{biblatex-chicago}
+% \addbibresource{refs.bib}
+
+\title{STEP Write Ups}
+\author{joel}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Assignment 1}
+
+Let $a, b \in \R \backslash \{0\}$ and $c \in \R$.
+
+\begin{enumerate}[label=(\roman*)]
+    \item Prove that, if a and b are either both positive or both negative, then
+        the equation \[ \frac{x}{x - a} + \frac{x}{x - b} = 1 \] has two
+        distinct real solutions.
+    \begin{proof}
+        Assume that $x \neq a$ and $x \neq b$ The equation can be rearranged by multiplying
+        by $x - a$ and $x - b$ to get \[ x(x -a) + x(x - b) = (x - a)(x - b), \]
+        which can be simplified to \[ x^2 - ab = 0. \]
+        In either case, we know that $ab > 0$ and so the real solutions of this
+        equation are $x = \pm \sqrt{ab}$.
+    \end{proof}
+    \item Prove that, if $c \neq 1$, the equation
+        \[  \frac{x}{x - a} + \frac{x}{x - b} = 1 + c \]
+        has exactly one real solution if
+        \[ c^2 = -\frac{4ab}{(a-b)^2}. \]
+        Prove that this can be written
+        \[ c^2 = 1 - \left( \frac{a + b}{a - b} \right)^2 \]
+        and deduce that it can only hold if $0 < c^2 \leq 1.$
+    \begin{proof}
+        Similarly, the equation can be reduced to
+        \[ x^2 - ab = c(x - a)(x - b), \] or alternatively,
+        \[ (1 - c)x^2 + c(a + b)x - (c + 1)ab = 0. \]
+        To find the case where this equation has one real root, set the
+        discriminant to zero, i.e.
+        \[ c^2(a+b)^2 - 4 (1-c) (c + 1) ( -ab) = 0. \]
+        Rearranging this, the result becomes
+        \[  c^2 = -\frac{4ab}{(a-b)^2}. \]
+        Since $-4ab = a^2 - 2ab + b^2 - (a^2 + 2ab + b^2) = (a-b)^2 - (a+b)^2$,
+        the equation for $c^2$ becomes
+        \begin{align*}
+            c^2 &= -\frac{4ab}{(a-b)^2} \\
+                &= \frac{(a - b)^2 - (a + b)^2}{(a - b)^2} \\
+                &=1 - \left( \frac{a + b}{a - b} \right)^2.
+        \end{align*}
+        Since $c^2$ is a real number, that necessarily means that it is positive.
+        However, for $c^2$ to be zero, $-4ab$ has to be zero, which requires one
+        of $a, b$ to be zero, which goes against the hypothesis of the question.
+        Thus, $0 < c^2 \leq 1$.
+    \end{proof}
+\end{enumerate}
+
+\section*{Assignment 2}
+
+\begin{enumerate}[label=(\roman*)]
+    \item Find the greatest and least values of $bx + a$ for $-10 \leq x \leq 10$.
+        \begin{proof}
+            For $b = 0$, we are left with just $a$ as the greatest and least values.
+            For $b > 0$, the greatest value occurs at $x = 10$, which is $10b + a$.
+            The least value occurs at $x = -10$, which is $-10b + a$.
+            For $b < 0$, the greatest value occurs at $x = -10$, which is $-10b + a$.
+            The least value occurs at $x = 10$, which is $10b + a$.
+        \end{proof}
+    \item Find the greatest and least values of $cx^2 + bx + a$, where $c \geq 0$
+        for $-10 \leq x \leq 10$.
+        \begin{proof}
+            For $c = 0$, we have the case of the linear equation above.
+            For $c > 0$, we complete the square to get
+            \[ \left( x + \frac{b}{2c}\right)^2 + \frac{a}{c} - \frac{b^2}{4c^2}. \]
+            We can use differentiation to find that the minimum of this expression 
+            exists at $x = \frac{-b}{2c}$. 
+            For the greatest value, we consider different values of $b$. When
+            $b = 0$, we have the same greatest value at $x = 10, x = -10$ of 
+            $100c + a$. When $b < 0$, then the greatest value is at $x = 10$, with 
+            $100c + a$. When $b > 0$, then the greatest value is at $x = -10$, with 
+            $100c + a$. These last two conditions are because we are only considering
+            the expression over a closed interval. 
+        \end{proof}
+\end{enumerate}
+
+\section*{Assignment 3} 
+
+\begin{enumerate}[label=(\roman*)]
+    \item Prove that \[ \int_0^a \sqrt{\lfloor x\rfloor} \,\dd x = \sum ^{a - 1}_{r = 0} \sqrt{r}. \]
+        when $a$ is a positive integer. 
+        \begin{proof}
+            Using the additivity, the integral becomes 
+            \begin{align*}
+                \int^a_0 \sqrt{\lfloor x\rfloor} \,\dd x &=
+                \int^1_0 \sqrt{\lfloor x\rfloor} \,\dd x + \int^2_1 \sqrt{\lfloor x\rfloor} \,\dd x + \ldots \int^a_{a-1} \sqrt{\lfloor x\rfloor} \,\dd x \\
+                                                         &= \sum_{r = 0}^{a - 1} \left( \int_{r}^{r + 1} \sqrt{\lfloor x\rfloor} \,\dd x \right)
+            \end{align*}
+            On the interval $[r, r+1)$, $\lfloor x \rfloor = r$, so
+            $\sqrt{\floor{x}} = \sqrt{r}$ for all $x$ on the interval.
+            Thus, it follows that
+            \[  \int_0^a \sqrt{\lfloor x\rfloor} \,\dd x = \sum ^{a - 1}_{r =
+            0} \sqrt{r}. \]
+        \end{proof}
+    \item Prove that $\int_0^a 2^{\floor{x}} \, \dd x = 2^a - 1$. 
+        \begin{proof}
+            Using a similar argument as previous, we aim to transform this floor
+            function into a summation. 
+            On the interval $[r, r+1)$, we have that $\floor{x} = r$ and thus 
+            $2^{\floor{x}} = 2^r$. 
+            The integral becomes 
+            \begin{align*}
+                \int_0^a 2^{\floor{x}} \, \dd x &= \sum_{r = 0}^{a - 1} \left( \int_r^{r+1} 2^{\floor{x}} \, \dd x\right) \\
+                                                &= \sum_{r = 0}^{a - 1} 2^r. 
+            \end{align*}
+
+            Since this is a geometric progression, it can be easily evaluated as
+            \[ \frac{1(1 - 2^a)}{1 - 2} = 2^a - 1. \] 
+        \end{proof}
+
+    \item Determine an expression for $\int_0^a 2^{\floor{x}} \, \dd x $ when
+        $a$ is positive but not an integer.
+        \begin{proof}
+            Using the floor function, the integral can be split into 
+            \[ \int_0^a 2^{\floor{x}} \, \dd x = \int_0^{\floor{a}} 2^{\floor{x}} \, \dd x + \int_{\floor{a}}^{a} 2^{\floor{x}} \, \dd x. \]
+            We derived an expression for the first part of this sum in the previous
+            question. We still have that the value at any point in $[\floor{a}, a)$
+            will be $2^a$, but we multiply by $(a - \floor{a})$ in order to determine 
+            the fractional part. Thus, the expression is
+            \[ \int_0^a 2^{\floor{x}} \, \dd x  = 2^a - 1 + (a - \floor{a})2^a. \]
+        \end{proof}
+\end{enumerate}
+
+\section*{Assignment 4}
+
+\begin{enumerate}[label=(\roman*)]
+    \item Find the real values of $x$ for which $x^3 - 4x^2 - x + 4 \geq 0$.
+        \begin{proof}
+            Guessing that $x = 4$ is a root (which it is), we are able to find that
+            the other two roots are $x = \pm 1$. Sketching the graph and using the knowledge 
+            of behaviour of cubics as $x \to \pm \infty$, we know that the expression 
+            is greater than $0$ is when $-1 \leq x \leq 1$ or $x \geq 4$. 
+        \end{proof}
+    \item 
+\end{enumerate}
+
+
+
+\end{document}

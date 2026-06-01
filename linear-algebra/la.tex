@@ -1,0 +1,91 @@
+\documentclass[10pt]{article} 
+
+\usepackage[a4paper,margin=2cm,left=2cm,right=2cm]{geometry} 
+\usepackage[UKenglish]{babel}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{proposition}{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\newtheorem{notation}{Notation}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+
+% \DeclareMathOperator{\dom}{dom}
+
+% \usepackage{graphicx}
+% \graphicspath{{./images/}}
+
+\title{Linear Algebra}
+\author{joel}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Intro}
+
+The notes here are based off of the book "Linear Algebra Done Right". 
+
+\section{Vector Spaces}
+
+\begin{notation}
+    $\F$ stands for either $\R$ or $\C$. That is, if a theorem holds for $\F$, it holds
+    for both the real and complex numbers. 
+\end{notation}
+
+The elements of $\F$ are called `scalars'. Lists of length $n$ are ordered
+collections of $n$ objects. Cannot be infinite, must have the same order to be
+classed as equal. Also often called an $n$-tuple. 
+
+\begin{definition}
+    $\F^n$ is the set of all lists of length $n$ of elements of $\F$: 
+    \[ \F^n = \{ (x_1, \ldots, x_n) : x_k \in \F \text{ for } k = 1, \ldots, n\}. \]
+    For $(x_1, \ldots, x_n) \in \F$ and $k \in \{1, \ldots, k\}$ we say that
+    $x_k$ is the $k$th coordinate of $(x_1, \ldots, x_n)$.
+\end{definition}
+
+Addition is commutative in $\F^n$. 
+There exist additive inverses in $\F^n$.
+Scalar multiplication in $\F^n$ is such that we have $\lambda \in \F$ and $x \in \F^n$
+to get $\lambda x \in F^n$.
+
+\begin{definition}
+    A vector space is a set $V$ along with an addition on $V$ and a scalar
+    multiplication on $V$ such that we have commutativity, associativity, additive identity, 
+    additive inverse, multiplicative identity, and distributive properties. 
+\end{definition}
+
+
+\begin{example}
+    An example of a vector space involves a set of functions: 
+    \begin{itemize}
+        \item If $S$ is a set, then $\F^S$ denotes the set of functions from $S$ to $\F$. 
+        \item For $f, g \in \F^S$, the sum $f + g \in \F^S$ is the function defined by 
+            \[ (f +g)(x) = f(x) + g(x), \] for all $x \in S$. 
+        \item For $\lambda \in \F$ and $f \in \F^S$, the product $\lambda f \in \F^S$ is the function defined by 
+            \[ (\lambda f)(x) = \lambda f ( x), \] for all $x \in S$. 
+    \end{itemize}
+    For instance, if $\F = \R$ and $S = [0, 1]$ then $R^{[0,1]}$ is the set of
+    all real valued functions on the interval $[0, 1]$.
+\end{example}
+
+A vector space has a unique additive identity. 
+Every element in a vector space has a unique additive inverse. 
+
+\end{document}

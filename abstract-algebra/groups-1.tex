@@ -1,0 +1,176 @@
+\documentclass[10pt]{article} 
+
+\usepackage[a4paper,margin=2cm,left=2cm,right=2cm]{geometry} 
+\usepackage[UKenglish]{babel}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumitem}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{proposition}{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+
+% Example
+% \DeclareMathOperator{\dom}{dom}
+
+\usepackage{graphicx}
+\graphicspath{{./images/}}
+
+% UNCOMMENT IF USING REFERENCES
+% \usepackage[notes, backend=biber]{biblatex-chicago}
+% \addbibresource{refs.bib} 
+
+\title{Groups Sheet 1}
+\author{joel}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+Let $G$ be any group. Show that the identity $e$ is the only element $g \in G$
+satisfying the equation $g^2 = g$.
+
+\begin{proof}
+    Take $g$ to be any element of the group satisfying $g^2 = g$. 
+    Multiply on the right by $g^{-1}$ to get 
+    \begin{align*}
+        g \cdot g \cdot g^{-1} &= g \cdot g^{-1} \\ 
+        g \cdot e &= e \\
+        g &= e
+    \end{align*}
+\end{proof}
+
+Let $H$ and $K$ be two subgroups of a group $G$. Show that the intersection $H
+\cap K$ is a subgroup of $G$. Show that the union $H \cup K$ is a subgroup of $G$ if 
+and only if either $H \subseteq K$ or $K \subseteq H$.
+
+\begin{proof}
+    \begin{enumerate}[label=(\roman*)]
+        \item Since we have that $H, K$ are subgroups, they must necessarily contain $e$
+            and thus their intersection contains $e$. To check inverses, if $g \in H
+            \cap K$ then since $g^{-1} \in H$ and $g^{-1} \in K$ we have that $g^{-1}
+            \in H \cap K$. For closure, if $a, b \in H \cap K$, then $a, b \in H$ and
+            $a, b \in K$ by the properties of subgroups imply that $ab \in H$ and $ab
+            \in K$. Thus, $ab \in H \cap K$. 
+            Since we have all of the properties of a subgroup, we know that $H \cap K$ 
+            is a subgroup. 
+
+        \item ($\implies$) Since both contain $e$ we know that the two subsets
+            cannot be disjoint. We prove the contrapositive.
+            Take $h \in H \setminus K$ and $k \in K \setminus H$. Consider $hk$; 
+            $hk \notin H$ since $k$ is not an element of $h$. With a similar 
+            argument for $K$, we see that $hk \notin H \cup K$ and as such we 
+            do not have closure. 
+
+            ($\impliedby$) If we have that $H \subseteq K$ or that $K \subseteq H$
+            then $H \cup K$ is equal to $K$ or to $H$ respectively. Since we 
+            know that these are subsets, we are finished. 
+
+    \end{enumerate} 
+\end{proof}
+
+Let $G = \R \setminus \{-1\}$, and let $x * y = x + y + xy$, where $xy$ denotes
+the usual product of two real numbers. Show that $(G, *, 0)$ is a group. What
+is the inverse of 2 in this group? Solve the equation $2 * x * 5 = 6$.
+
+\begin{proof}
+    $G$ is a group if it satisfies identity, closure, associativity, and inverses. 
+    \begin{enumerate}[label=(\roman*)]
+        \item We are given that $0$ is the identity. 
+            \[ 0 * 0 = 0 + 0 + (0)(0) = 0. \]
+        \item Given $x, y \in \R$, we know that the usual operations of addition
+            and multiplication will result in a real number. What remains to show is 
+            that we never have $x * y = -1$, or rather that 
+            \[ -1 = x + y + xy \] 
+            has no real solutions.
+            \begin{align*}
+                - 1 &= x + y + xy \\
+                -1 &= x + y(1 + x) \\
+                -(1 + x) &= y(1 + x) \\
+            \end{align*}
+            This equality can only hold if either $x = -1$ or $y = -1$, which they 
+            cannot be. Thus we have closure
+        \item Associativity is satisfied when $x * (y * z) = (x * y) * z$. Since
+            real addition is associative:
+            \begin{align*}
+                x * (y * z) &= x * (y + z + yz) \\
+                            &= x + (y + z + yz) + x(y + z + zy) \\
+                            &= x + y + z + yz + xy + xz + xyz \\
+                            &= x + y + xy + z + zx + yz + xyz \\
+                            &= (x + y + xy) + z + (x + y + xy)z \\
+                            &= (x + y + xy) * z \\
+                            &= (x * y) * z. 
+            \end{align*}
+        \item The inverse for any element $x \in G$ is $x^{-1} = -\frac{x}{1+x}$. 
+            \begin{align*}
+                x * x^{-1} &= x + (-\frac{x}{1 + x}) + x(-\frac{x}{1+x}) \\
+                           &= \frac{x + x^2}{1 + x} - \frac{x}{1 + x} - \frac{x^2}{1 + x} \\
+                           &= 0
+            \end{align*}
+    \end{enumerate}
+    The inverse of $2$ is therefore $-\frac{2}{3}$.
+
+    To solve $2 * x * 5 = 6$, we determine the inverse elements of $2, 5$ and left
+    and right multiply accordingly. 
+    \begin{align*}
+        x &= 2^{-1} * 6 * 5^{-1} \\
+          &= -\frac{2}{3} * 6 * -\frac{5}{6} \\
+          &= -\frac{11}{18}
+    \end{align*}
+\end{proof}
+
+Let $G$ be a finite group. 
+\begin{enumerate}[label=(\alph*)]
+    \item Let $g \in G$. Show from first principles that there is a positive integer $n$ 
+        such that $g^n = e$. (The least such $n$ is called the \textit{order} of $g$.) 
+        \begin{proof}
+            We can use a simple induction argument to know that for all $k \in \N$, 
+            we have that $g^k \in G$. By the pidgeonhole principle, we know that
+            there exists some $i, j \in \N, i > j$ such that $g^i = g^j$. 
+            From the properties of $G$ as a group 
+            Since we know we can always cancel, we have that $g^{i-j} = e$
+            where $i - j = n \in \Z^+$.
+        \end{proof}
+    \item Show from first principles that there is a positive integer $N$ such that $g^N
+        = e$ for all $g \in G$.
+        \begin{proof}
+            Since for each $g \in G$ there is an integer $n$ that satisfies $g^n = e$, then 
+            if we take $N = \mathrm{lcd}(n_1, \ldots, n_k)$ for $|G| = k$, then 
+            this is the integer such that every $g^N = e$. 
+        \end{proof}
+\end{enumerate}
+
+Let $S$ be a finite non-empty set of non-zero complex numbers which is closed
+under multiplication. Show that $S$ is a subset of the set $\{z \in \C \; | \; |z| =
+1\}$. Show that $S$ is a group with respect to multiplication, and deduce that
+$S$ is the set of $n$th roots of unity for some $n \in \N$; that is,
+\[ S = \{e^{2\pi i k/n} \; | \; k = 0, 1, \ldots, n - 1 \}. \]
+
+\begin{proof}
+    If $z \in S$ is complex then we can represent it as 
+    $z = |z|(\cos{\theta} + i\sin{\theta})$ where $\theta = \arg(z)$.
+    Since $S$ is finite, then we must have that
+    Using De Moivre's theorem, 
+    we have that $g^n = |z|^n (\cos{n\theta} + i\sin{n\theta})$. We can see that 
+    $|z| = 1$ must be the case, since if $|z| > 1$ it would continue to grow
+    and never reach $1$, and if $|z| < 0$ it would continue to shrink. Thus,
+    this set is a subset of $\{z \in \C \; | \; |z| = 1 \}$.
+
+\end{proof}
+
+\end{document}
